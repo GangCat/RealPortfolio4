@@ -9647,11 +9647,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10a3557bae866e3408b3ea201eb10fe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasPauseMenu: {fileID: 0}
-  playerMgr: {fileID: 7673487250753446365}
-  enemyMgr: {fileID: 158698285}
-  mainMenuMgr: {fileID: 0}
-  stageMgr: {fileID: 1127104181}
+  canvasPauseMenu: {fileID: 1989898199}
+  playerMng: {fileID: 7673487250753446365}
+  enemyMng: {fileID: 158698285}
+  mainMenuMng: {fileID: 0}
+  stageMng: {fileID: 1127104181}
+  crystalMng: {fileID: 849280185}
 --- !u!4 &1859265318
 Transform:
   m_ObjectHideFlags: 0

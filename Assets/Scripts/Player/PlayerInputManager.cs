@@ -19,7 +19,13 @@ public class PlayerInputManager : MonoBehaviour, IPauseObserver, IBossEngageObse
 
     public bool IsSellCrystal => isSellCrystal;
 
-    private void Awake()
+    public void Init
+        (
+        RetVoidParamVoidDelegate _useAmmoCallback,
+        RetVoidRaramIntDelegate _enemyDamagedCallback,
+        RetVoidRaramIntDelegate _goldChangeCallback,
+        RetVoidParamVoidDelegate _playerDamagedCallback
+        )
     {
         playerMove = GetComponent<PlayerMovementController>();
         playerAnim = GetComponent<PlayerAnimatorController>();
@@ -27,32 +33,29 @@ public class PlayerInputManager : MonoBehaviour, IPauseObserver, IBossEngageObse
         weaponAR = GetComponentInChildren<WeaponAssaultRifle>();
         statusGold = GetComponent<StatusGold>();
         gameManager = GameManager.Instance;
-    }
 
-    public void SetOnUseAmmoCallback(RetVoidParamVoidDelegate _callback)
-    {
-        weaponAR.OnUseAmmoCallback = _callback;
-    }
-
-    public void SetOnEnemyDamagedCallback(RetVoidRaramIntDelegate _callback)
-    {
-        weaponAR.OnEnemyDamagedCallback = _callback;
-    }
-
-    public void SetOnGoldChangeCallback(RetVoidRaramIntDelegate _callback)
-    {
-        statusGold.OnGoldChangeCallback = _callback;
-    }
-
-    public void SetOnPlayerDamagedCallback(RetVoidParamVoidDelegate _callback)
-    {
-        playercollider.OnPlayerDamagedCallback = _callback;
-    }
-
-    private void Start()
-    {
         gameManager.RegisterPauseObserver(GetComponent<IPauseObserver>());
+
+        weaponAR.OnUseAmmoCallback = _useAmmoCallback;
+        weaponAR.OnEnemyDamagedCallback = _enemyDamagedCallback;
+        statusGold.OnGoldChangeCallback = _goldChangeCallback;
+        playercollider.OnPlayerDamagedCallback = _playerDamagedCallback;
     }
+
+    public void CheckPaused(bool _isPaused)
+    {
+        isPaused = _isPaused;
+
+        playerMove.CheckPaused(isPaused);
+        playerAnim.CheckPaused(isPaused);
+        weaponAR.CheckPaused(isPaused);
+    }
+
+    public void CheckBossEngage(bool _isPaused)
+    {
+        isBossEngage = _isPaused;
+    }
+
 
     private void Update()
     {
@@ -67,6 +70,7 @@ public class PlayerInputManager : MonoBehaviour, IPauseObserver, IBossEngageObse
         UpdateAttack();
         UpdateReload();
     }
+
     private void UpdatePause()
     {
         if (isBossEngage)
@@ -139,19 +143,7 @@ public class PlayerInputManager : MonoBehaviour, IPauseObserver, IBossEngageObse
             weaponAR.ChangeState(EWeaponState.Reload);
     }
 
-    public void CheckPaused(bool _isPaused)
-    {
-        isPaused = _isPaused;
 
-        playerMove.CheckPaused(isPaused);
-        playerAnim.CheckPaused(isPaused);
-        weaponAR.CheckPaused(isPaused);
-    }
-
-    public void CheckBossEngage(bool _isPaused)
-    {
-        isBossEngage = _isPaused;
-    }
 
     private float x = 0.0f;
     private float z = 0.0f;
@@ -163,10 +155,10 @@ public class PlayerInputManager : MonoBehaviour, IPauseObserver, IBossEngageObse
     private bool isPaused = false;
     private bool isBossEngage = false;
 
-    private WeaponAssaultRifle weaponAR = null;
-    private PlayerMovementController playerMove = null;
-    private PlayerAnimatorController playerAnim = null;
-    private PlayerCollider playercollider = null;
-    private GameManager gameManager = null;
-    private StatusGold statusGold = null;
+    private WeaponAssaultRifle          weaponAR = null;
+    private PlayerMovementController    playerMove = null;
+    private PlayerAnimatorController    playerAnim = null;
+    private PlayerCollider              playercollider = null;
+    private GameManager                 gameManager = null;
+    private StatusGold                  statusGold = null;
 }

@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour, IPauseSubject, IBossEngageSubject, ISt
             return instance;
         }
     }
+
     #region PauseObserver
     public void RegisterPauseObserver(IPauseObserver _observer)
     {
@@ -96,29 +97,31 @@ public class GameManager : MonoBehaviour, IPauseSubject, IBossEngageSubject, ISt
     private void Awake()
     {
         canvasPauseMenu = FindAnyObjectByType<CanvasPauseMenu>();
-        playerMgr = FindAnyObjectByType<PlayerInputManager>();
-        enemyMgr = FindAnyObjectByType<EnemyManager>();
-        stageMgr = FindAnyObjectByType<StageManager>();
+        playerMng = FindAnyObjectByType<PlayerInputManager>();
+        enemyMng = FindAnyObjectByType<EnemyManager>();
+        stageMng = FindAnyObjectByType<StageManager>();
         instance = this;
     }
 
     private void Start()
     {
-        if(mainMenuMgr != null)
-            mainMenuMgr.OnButtonMainCallback = ChangeScene;
+        if(mainMenuMng != null)
+            mainMenuMng.OnButtonMainCallback = ChangeScene;
 
-        if(playerMgr != null)
+        if(playerMng != null)
         {
-            playerMgr.SetOnUseAmmoCallback(UpdateUsedAmmo);
-            playerMgr.SetOnGoldChangeCallback(UpdateGold);
-            playerMgr.SetOnPlayerDamagedCallback(UpdateDamagedCount);
-            playerMgr.SetOnEnemyDamagedCallback(UpdateEnemyDamaged);
+            playerMng.Init(
+                UpdateUsedAmmo,
+                UpdateGold,
+                UpdateEnemyDamaged,
+                UpdateDamagedCount
+                );
         }
 
-        if (enemyMgr != null)
+        if (enemyMng != null)
         {
-            enemyMgr.SetOnEnemyDeadCallback(CalcDeadEnemy);
-            enemyMgr.InitEnemyClearCallback(StageClear);
+            enemyMng.SetOnEnemyDeadCallback(CalcDeadEnemy);
+            enemyMng.InitEnemyClearCallback(StageClear);
         }
 
         if(canvasPauseMenu != null)
@@ -127,9 +130,9 @@ public class GameManager : MonoBehaviour, IPauseSubject, IBossEngageSubject, ISt
             canvasPauseMenu.UpdateTime();
         }
 
-        if(stageMgr != null)
+        if(stageMng != null)
         {
-            stageMgr.Init(7, StageStart);
+            stageMng.Init(7, StageStart);
         }
 
     }
@@ -145,12 +148,12 @@ public class GameManager : MonoBehaviour, IPauseSubject, IBossEngageSubject, ISt
     public void GameStart()
     {
         ResetEnemySpawnPos();
-        enemyMgr.CheckStage(curStage);
+        enemyMng.CheckStage(curStage);
     }
 
     private void ResetEnemySpawnPos()
     {
-        enemyMgr.ResetSpawnPos(stageMgr.GetMinSpawnPoint(curStage), stageMgr.GetMaxSpawnPoint(curStage));
+        enemyMng.ResetSpawnPos(stageMng.GetMinSpawnPoint(curStage), stageMng.GetMaxSpawnPoint(curStage));
     }
 
     private void UpdateUsedAmmo()
@@ -185,7 +188,7 @@ public class GameManager : MonoBehaviour, IPauseSubject, IBossEngageSubject, ISt
 
     private void StageClear()
     {
-        stageMgr.ActivateDoorTrigger(curStage);
+        stageMng.ActivateDoorTrigger(curStage);
     }
 
     private GameManager() { }
@@ -193,13 +196,15 @@ public class GameManager : MonoBehaviour, IPauseSubject, IBossEngageSubject, ISt
     [SerializeField]
     private CanvasPauseMenu canvasPauseMenu = null;
     [SerializeField]
-    private PlayerInputManager playerMgr = null;
+    private PlayerInputManager playerMng = null;
     [SerializeField]
-    private EnemyManager enemyMgr = null;
+    private EnemyManager enemyMng = null;
     [SerializeField]
-    private MainMenuUIManager mainMenuMgr = null;
+    private MainMenuUIManager mainMenuMng = null;
     [SerializeField]
-    private StageManager stageMgr = null;
+    private StageManager stageMng = null;
+    [SerializeField]
+    private CrystalManager crystalMng = null;
     
 
     private bool isPaused = false;
