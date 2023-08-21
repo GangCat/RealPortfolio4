@@ -9,7 +9,7 @@ public class EnemyMemoryPool : MonoBehaviour
         StartCoroutine("CheckEnemyClearCoroutine");
     }
 
-    public OnEnemyClearDelegate OnEnemyClearCallback
+    public RetVoidParamVoidDelegate OnEnemyClearCallback
     {
         set => onEnemyEmptyCallback = value;
     }
@@ -73,5 +73,5 @@ public class EnemyMemoryPool : MonoBehaviour
 
     private MemoryPool[] memoryPools = null;
 
-    private OnEnemyClearDelegate onEnemyEmptyCallback = null;
+    private RetVoidParamVoidDelegate onEnemyEmptyCallback = null;
 }

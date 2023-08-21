@@ -1,7 +1,17 @@
-public delegate void OnGoldChangeDelegate(int _value);
-public delegate void OnPlayerDamagedDelegate();
-public delegate void OnUseAmmoDelegate();
-public delegate void OnEnemyDeadDelegate();
-public delegate void OnEnemyDamagedDelegate(int _dmg);
-public delegate void OnPlayerMoveToNextStageDelegate();
-public delegate void OnEnemyClearDelegate();
+public delegate void RetVoidParamVoidDelegate();
+public delegate void RetVoidRaramIntDelegate(int _valueInt);
+public delegate void RetVoidParamStringDelegate(string _valueStr);
+
+public struct SStagePos
+{
+    public int x;
+    public int y;
+    public EStageState stageState;
+
+    public SStagePos(int _x, int _y, EStageState _stageState)
+    {
+        x = _x;
+        y = _y;
+        stageState = _stageState;
+    }
+}

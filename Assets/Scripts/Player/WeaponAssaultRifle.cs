@@ -11,12 +11,12 @@ public class AttributeDmgEvent : UnityEngine.Events.UnityEvent<float[]> { }
 public enum EWeaponState { None = -1, Idle, Attack, Reload }
 public class WeaponAssaultRifle : MonoBehaviour
 {
-    public OnUseAmmoDelegate OnUseAmmoCallback
+    public RetVoidParamVoidDelegate OnUseAmmoCallback
     {
         set => onUseAmmoCallback = value;
     }
 
-    public OnEnemyDamagedDelegate OnEnemyDamagedCallback
+    public RetVoidRaramIntDelegate OnEnemyDamagedCallback
     {
         set => onEnemyDamagedCallback = value;
     }
@@ -310,6 +310,6 @@ public class WeaponAssaultRifle : MonoBehaviour
     private ProjectileMemoryPool projectileMemoryPool = null;
 
     private EWeaponState curState = EWeaponState.None;
-    private OnUseAmmoDelegate onUseAmmoCallback = null;
-    private OnEnemyDamagedDelegate onEnemyDamagedCallback = null;
+    private RetVoidParamVoidDelegate onUseAmmoCallback = null;
+    private RetVoidRaramIntDelegate onEnemyDamagedCallback = null;
 }

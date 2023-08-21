@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ProjectileMemoryPool : MonoBehaviour
 {
-    public void SpawnProjectile(Vector3 _pos, Quaternion _quaternion, float _dmg, OnEnemyDamagedDelegate _callback = null)
+    public void SpawnProjectile(Vector3 _pos, Quaternion _quaternion, float _dmg, RetVoidRaramIntDelegate _callback = null)
     {
         GameObject projectileGo = memoryPool.ActivatePoolItem();
         projectileGo.SetActive(false);

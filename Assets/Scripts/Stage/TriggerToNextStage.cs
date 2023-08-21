@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TriggerToNextStage : MonoBehaviour
 {
-    public OnPlayerMoveToNextStageDelegate OnPlayerMoveToNextStageCallback
+    public RetVoidParamVoidDelegate OnPlayerMoveToNextStageCallback
     {
         set => onPlayerMoveToNextStageCallback = value;
     }
@@ -18,5 +18,5 @@ public class TriggerToNextStage : MonoBehaviour
         }
     }
 
-    private OnPlayerMoveToNextStageDelegate onPlayerMoveToNextStageCallback = null;
+    private RetVoidParamVoidDelegate onPlayerMoveToNextStageCallback = null;
 }

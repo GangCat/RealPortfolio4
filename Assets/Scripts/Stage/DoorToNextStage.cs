@@ -7,7 +7,7 @@ public class DoorToNextStage : MonoBehaviour
 {
     public EDoorDir DoorDir => doorDir;
 
-    public void Init(OnPlayerMoveToNextStageDelegate _callback)
+    public void Init(RetVoidParamVoidDelegate _callback)
     {
         trigger = GetComponentInChildren<TriggerToNextStage>();
         console = GetComponentInChildren<ConsoleToNextStage>();

@@ -13,7 +13,7 @@ public class EnemyController : MonoBehaviour, IPauseObserver
         set => onDeactivateCallback = value;
     }
 
-    public OnEnemyDeadDelegate OnEnemyDeadCallback
+    public RetVoidParamVoidDelegate OnEnemyDeadCallback
     {
         set => onEnemyDeadCallback = value;
     }
@@ -53,7 +53,7 @@ public class EnemyController : MonoBehaviour, IPauseObserver
         weapon.TogglePause();
     }
 
-    public void Setup(GameObject _target, OnEnemyDeadDelegate _onEnemyDeadCallback)
+    public void Setup(GameObject _target, RetVoidParamVoidDelegate _onEnemyDeadCallback)
     {
         targetTr = _target.transform;
         weapon.TargetTr = _target.transform;
@@ -223,6 +223,6 @@ public class EnemyController : MonoBehaviour, IPauseObserver
     private StatusSpeed statusSpeed = null;
     private Animator anim = null;
     private GameManager gameManager = null;
-    private OnEnemyDeadDelegate onEnemyDeadCallback = null;
+    private RetVoidParamVoidDelegate onEnemyDeadCallback = null;
     private EEnemyType enemyType = EEnemyType.None;
 }

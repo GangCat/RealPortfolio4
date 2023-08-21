@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour, IStageObserver, IPauseObserver
 {
-    public void SetOnEnemyDeadCallback(OnEnemyDeadDelegate _onEnemyDeadCallback)
+    public void SetOnEnemyDeadCallback(RetVoidParamVoidDelegate _onEnemyDeadCallback)
     {
         onEnemyDeadCallback = _onEnemyDeadCallback;
     }
@@ -27,7 +27,7 @@ public class EnemyManager : MonoBehaviour, IStageObserver, IPauseObserver
         maxSpawnPosition = _maxSpawnPoint;
     }
 
-    public void InitEnemyClearCallback(OnEnemyClearDelegate _enemyClearCallback)
+    public void InitEnemyClearCallback(RetVoidParamVoidDelegate _enemyClearCallback)
     {
         enemyMemoryPool.OnEnemyClearCallback = _enemyClearCallback;
     }
@@ -98,5 +98,5 @@ public class EnemyManager : MonoBehaviour, IStageObserver, IPauseObserver
 
     private GameManager         gameManager = null;
     private EnemyMemoryPool     enemyMemoryPool = null;
-    private OnEnemyDeadDelegate onEnemyDeadCallback = null;
+    private RetVoidParamVoidDelegate onEnemyDeadCallback = null;
 }

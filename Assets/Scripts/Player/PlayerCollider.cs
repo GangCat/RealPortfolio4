@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerCollider : MonoBehaviour
 {
-    public OnPlayerDamagedDelegate OnPlayerDamagedCallback
+    public RetVoidParamVoidDelegate OnPlayerDamagedCallback
     {
         set => onPlayerDamagedCallback = value;
     }
@@ -64,5 +64,5 @@ public class PlayerCollider : MonoBehaviour
     private Collider myCollider = null;
     private StatusHP statusHp = null;
     private PlayerAnimatorController playerAnim = null;
-    private OnPlayerDamagedDelegate onPlayerDamagedCallback = null;
+    private RetVoidParamVoidDelegate onPlayerDamagedCallback = null;
 }

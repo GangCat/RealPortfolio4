@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ProjectileController : MonoBehaviour, IPauseObserver
 {
-    public void Setup(MemoryPool _memoryPool, float _dmg, ImpactMemoryPool _impactPool, OnEnemyDamagedDelegate _callback = null)
+    public void Setup(MemoryPool _memoryPool, float _dmg, ImpactMemoryPool _impactPool, RetVoidRaramIntDelegate _callback = null)
     {
         impactPool = _impactPool;
         memoryPool = _memoryPool;
@@ -121,5 +121,5 @@ public class ProjectileController : MonoBehaviour, IPauseObserver
     private ImpactMemoryPool impactPool = null;
     private GameManager gameManager = null;
     private ProjectileTrail trail = null;
-    private OnEnemyDamagedDelegate onEnemyDamagedCallback = null;
+    private RetVoidRaramIntDelegate onEnemyDamagedCallback = null;
 }

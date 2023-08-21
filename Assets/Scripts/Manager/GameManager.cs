@@ -41,13 +41,13 @@ public class GameManager : MonoBehaviour, IPauseSubject, IBossEngageSubject, ISt
 
         if (isPaused)
         {
-            pauseMenu.ShowPauseMenu();
+            canvasPauseMenu.ShowPauseMenu();
         }
 
         else
         {
             StopCoroutine("ShowElapsedTime");
-            pauseMenu.ClosePauseMenu();
+            canvasPauseMenu.HidePauseMenu();
         }
     }
     #endregion
@@ -95,7 +95,7 @@ public class GameManager : MonoBehaviour, IPauseSubject, IBossEngageSubject, ISt
 
     private void Awake()
     {
-        pauseMenu = FindAnyObjectByType<PanelPauseMenu>();
+        canvasPauseMenu = FindAnyObjectByType<CanvasPauseMenu>();
         playerMgr = FindAnyObjectByType<PlayerInputManager>();
         enemyMgr = FindAnyObjectByType<EnemyManager>();
         stageMgr = FindAnyObjectByType<StageManager>();
@@ -121,13 +121,10 @@ public class GameManager : MonoBehaviour, IPauseSubject, IBossEngageSubject, ISt
             enemyMgr.InitEnemyClearCallback(StageClear);
         }
 
-        if(pauseMenu != null)
+        if(canvasPauseMenu != null)
         {
-            pauseMenu.Init();
-            pauseMenu.OnClickResumeCallback = TogglePause;
-            pauseMenu.OnClickRestartCallback = ChangeScene;
-            pauseMenu.OnClickMainCallback = ChangeScene;
-            pauseMenu.UpdateTime();
+            canvasPauseMenu.Init(TogglePause, ChangeScene, ChangeScene);
+            canvasPauseMenu.UpdateTime();
         }
 
         if(stageMgr != null)
@@ -158,27 +155,27 @@ public class GameManager : MonoBehaviour, IPauseSubject, IBossEngageSubject, ISt
 
     private void UpdateUsedAmmo()
     {
-        pauseMenu.UpdateUsedAmmo();
+        canvasPauseMenu.UpdateTotalUsedAmmoCount();
     }
 
     private void CalcDeadEnemy()
     {
-        pauseMenu.UpdateDeadEnemy();
+        canvasPauseMenu.UpdateTotalEnemyKillCount();
     }
 
     private void UpdateGold(int _increasedGold)
     {
-        pauseMenu.UpdateGold(_increasedGold);
+        canvasPauseMenu.UpdateTotalGoldPlayerGain(_increasedGold);
     }
 
     private void UpdateDamagedCount()
     {
-        pauseMenu.UpdateDamagedCount();
+        canvasPauseMenu.UpdateTotalDamagePlayerTaken();
     }
 
     private void UpdateEnemyDamaged(int _dmg)
     {
-        pauseMenu.UpdateTotalAttackDamage(_dmg);
+        canvasPauseMenu.UpdateTotalAttackDamage(_dmg);
     }
 
     private void ChangeScene(string _sceneName)
@@ -194,7 +191,7 @@ public class GameManager : MonoBehaviour, IPauseSubject, IBossEngageSubject, ISt
     private GameManager() { }
 
     [SerializeField]
-    private PanelPauseMenu pauseMenu = null;
+    private CanvasPauseMenu canvasPauseMenu = null;
     [SerializeField]
     private PlayerInputManager playerMgr = null;
     [SerializeField]

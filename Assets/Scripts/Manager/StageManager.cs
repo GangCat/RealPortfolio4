@@ -22,14 +22,21 @@ public class StageManager : MonoBehaviour
         return stages[_curStageNum].GetMaxSpawnPoint();
     }
 
-    public void Init(int _minRoomCnt, OnPlayerMoveToNextStageDelegate _callback)
+    public void Init(int _minRoomCnt, RetVoidParamVoidDelegate _callback)
     {
+        stageGenerator.Init(SetListStage);
         stageGenerator.GenerateLevel(_minRoomCnt, _callback);
     }
 
     private void Awake()
     {
         stageGenerator = GetComponent<StageGenerator>();
+        listStage = new List<Stage>();
+    }
+
+    private void SetListStage(Stage[] _arrayStage)
+    {
+        listStage.AddRange(_arrayStage);
     }
 
     [SerializeField]
@@ -37,4 +44,5 @@ public class StageManager : MonoBehaviour
 
     private Stage[] stages = null;
     private StageGenerator stageGenerator = null;
+    private List<Stage> listStage = null;
 }

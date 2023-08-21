@@ -914,6 +914,7 @@ GameObject:
   - component: {fileID: 150527419}
   - component: {fileID: 150527421}
   - component: {fileID: 150527420}
+  - component: {fileID: 150527422}
   m_Layer: 0
   m_Name: Text_Used_Skill_Count
   m_TagString: Untagged
@@ -1038,6 +1039,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 150527418}
   m_CullTransparentMesh: 1
+--- !u!114 &150527422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 150527418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ec4bb997464dff4badb127cb70d91d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &158698283
 GameObject:
   m_ObjectHideFlags: 0
@@ -1112,7 +1125,7 @@ GameObject:
   - component: {fileID: 169769721}
   - component: {fileID: 169769720}
   m_Layer: 0
-  m_Name: Text_Temp
+  m_Name: Text_TotalSkilllDamage_PlayerDone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1678,7 +1691,7 @@ GameObject:
   - component: {fileID: 246104533}
   - component: {fileID: 246104532}
   m_Layer: 0
-  m_Name: Image_Text_UsedAmmo_Count_Background
+  m_Name: Image_UsedAmmo_Count_Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1698,7 +1711,7 @@ RectTransform:
   m_Children:
   - {fileID: 1168000572}
   m_Father: {fileID: 1174729254}
-  m_RootOrder: 2
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2291,7 +2304,7 @@ GameObject:
   - component: {fileID: 439699537}
   - component: {fileID: 439699536}
   m_Layer: 0
-  m_Name: Image_Text_TotalAttackedDamage_Background
+  m_Name: Image_TotalNormalDamage_PlayerDone_Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2783,17 +2796,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 572955497}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75ed79725acfbfd45a7a3a1b39132f11, type: 3}
+  m_Script: {fileID: 11500000, guid: 5048ee703184e7b4d8e6809799f61fba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textScore: {fileID: 637160822}
-  textTime: {fileID: 701029926}
-  textDeadEnemy: {fileID: 757955247}
-  textTotalDamage: {fileID: 1399106852}
-  textUsedAmmo: {fileID: 1168000573}
-  textTotalGold: {fileID: 1013723100}
-  textPlayerDamaged: {fileID: 1529456730}
-  textUsedSkill: {fileID: 150527420}
 --- !u!1 &580501303
 GameObject:
   m_ObjectHideFlags: 0
@@ -2826,7 +2831,7 @@ RectTransform:
   m_Children:
   - {fileID: 150527419}
   m_Father: {fileID: 1174729254}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2973,6 +2978,7 @@ GameObject:
   - component: {fileID: 637160821}
   - component: {fileID: 637160823}
   - component: {fileID: 637160822}
+  - component: {fileID: 637160824}
   m_Layer: 0
   m_Name: Text_Score
   m_TagString: Untagged
@@ -3097,6 +3103,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 637160820}
   m_CullTransparentMesh: 1
+--- !u!114 &637160824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 637160820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5101cb1c9b30e724f99b172122a41274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &637484655
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3412,6 +3430,7 @@ GameObject:
   - component: {fileID: 701029925}
   - component: {fileID: 701029927}
   - component: {fileID: 701029926}
+  - component: {fileID: 701029928}
   m_Layer: 0
   m_Name: Text_Time
   m_TagString: Untagged
@@ -3536,6 +3555,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 701029924}
   m_CullTransparentMesh: 1
+--- !u!114 &701029928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 701029924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13bbc162e0559b8439a879fa33268d57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -3752,8 +3783,9 @@ GameObject:
   - component: {fileID: 757955246}
   - component: {fileID: 757955248}
   - component: {fileID: 757955247}
+  - component: {fileID: 757955249}
   m_Layer: 0
-  m_Name: Text_DeadEnemy_Count
+  m_Name: Text_EnemyKillCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3876,6 +3908,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 757955245}
   m_CullTransparentMesh: 1
+--- !u!114 &757955249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 757955245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed0b063453659bf4da7ac8f519c25684, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &762260380
 GameObject:
   m_ObjectHideFlags: 0
@@ -5019,8 +5063,9 @@ GameObject:
   - component: {fileID: 1013723099}
   - component: {fileID: 1013723101}
   - component: {fileID: 1013723100}
+  - component: {fileID: 1013723102}
   m_Layer: 0
-  m_Name: Text_TotalGold
+  m_Name: Text_TotalGold_PlayerGain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5143,6 +5188,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1013723098}
   m_CullTransparentMesh: 1
+--- !u!114 &1013723102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013723098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26bb19edbf59eae42b93258bf3545bb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1026155606
 GameObject:
   m_ObjectHideFlags: 0
@@ -5589,10 +5646,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StagePrefabs:
+  - {fileID: 1790289142325292124, guid: 3d30eeefd6994b7438b1cc5f88c792f1, type: 3}
   - {fileID: 526914341876950082, guid: 0592e3ed608b3f943b7eb8a9c31b6b2c, type: 3}
   - {fileID: 526914341876950082, guid: 0592e3ed608b3f943b7eb8a9c31b6b2c, type: 3}
-  - {fileID: 526914341876950082, guid: 0592e3ed608b3f943b7eb8a9c31b6b2c, type: 3}
-  - {fileID: 526914341876950082, guid: 0592e3ed608b3f943b7eb8a9c31b6b2c, type: 3}
+  - {fileID: 526914341876950082, guid: 78a42a56b2a8ab24ba4c329144467cb8, type: 3}
+  - {fileID: 526914341876950082, guid: 3865344434cec4445b98e1d77c121434, type: 3}
   wallPrefabs:
   - {fileID: 3288680210126489217, guid: 07e672d0a4c9acb4e8f4468630a7c7fa, type: 3}
   - {fileID: 6821442217191637186, guid: 543ee3ff332cd4e4b8b2096498a56eec, type: 3}
@@ -5616,6 +5674,7 @@ GameObject:
   - component: {fileID: 1168000572}
   - component: {fileID: 1168000574}
   - component: {fileID: 1168000573}
+  - component: {fileID: 1168000575}
   m_Layer: 0
   m_Name: Text_UsedAmmo_Count
   m_TagString: Untagged
@@ -5740,6 +5799,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1168000571}
   m_CullTransparentMesh: 1
+--- !u!114 &1168000575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168000571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dac41868fa7b1e3488c6ad59f83b4814, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1174729253
 GameObject:
   m_ObjectHideFlags: 0
@@ -5772,11 +5843,11 @@ RectTransform:
   m_Children:
   - {fileID: 2044467980}
   - {fileID: 439699535}
-  - {fileID: 246104531}
-  - {fileID: 1399021416}
-  - {fileID: 1916217644}
-  - {fileID: 580501304}
   - {fileID: 2056943036}
+  - {fileID: 1916217644}
+  - {fileID: 1399021416}
+  - {fileID: 246104531}
+  - {fileID: 580501304}
   - {fileID: 972183987}
   - {fileID: 2100323073}
   - {fileID: 1723119130}
@@ -6698,7 +6769,7 @@ GameObject:
   - component: {fileID: 1399021418}
   - component: {fileID: 1399021417}
   m_Layer: 0
-  m_Name: Image_Text_TotalGold_Background
+  m_Name: Image_TotalGold_PlayerGainBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6718,7 +6789,7 @@ RectTransform:
   m_Children:
   - {fileID: 1013723099}
   m_Father: {fileID: 1174729254}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -6774,8 +6845,9 @@ GameObject:
   - component: {fileID: 1399106851}
   - component: {fileID: 1399106853}
   - component: {fileID: 1399106852}
+  - component: {fileID: 1399106854}
   m_Layer: 0
-  m_Name: Text_TotalAttackedDamage
+  m_Name: Text_TotalNormalDamage_PlayerDone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6898,6 +6970,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1399106850}
   m_CullTransparentMesh: 1
+--- !u!114 &1399106854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1399106850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b4df9fc479964749aebc708a675e88d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1400680653
 GameObject:
   m_ObjectHideFlags: 0
@@ -8001,8 +8085,9 @@ GameObject:
   - component: {fileID: 1529456729}
   - component: {fileID: 1529456731}
   - component: {fileID: 1529456730}
+  - component: {fileID: 1529456732}
   m_Layer: 0
-  m_Name: Text_PlayerDamaged_Count
+  m_Name: Text_TotalDamage_PlayerTaken
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8125,6 +8210,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1529456728}
   m_CullTransparentMesh: 1
+--- !u!114 &1529456732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1529456728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15f0e8ab974fa3c4384be173e45421e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1556339374
 GameObject:
   m_ObjectHideFlags: 0
@@ -9550,7 +9647,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10a3557bae866e3408b3ea201eb10fe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenu: {fileID: 572955501}
+  canvasPauseMenu: {fileID: 0}
   playerMgr: {fileID: 7673487250753446365}
   enemyMgr: {fileID: 158698285}
   mainMenuMgr: {fileID: 0}
@@ -9876,7 +9973,7 @@ GameObject:
   - component: {fileID: 1916217646}
   - component: {fileID: 1916217645}
   m_Layer: 0
-  m_Name: Image_Text_PlayerDamaged_Count_Background
+  m_Name: Image_TotalDamage_PlayerTaken_Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9896,7 +9993,7 @@ RectTransform:
   m_Children:
   - {fileID: 1529456729}
   m_Father: {fileID: 1174729254}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -10088,6 +10185,7 @@ GameObject:
   - component: {fileID: 1989898198}
   - component: {fileID: 1989898197}
   - component: {fileID: 1989898196}
+  - component: {fileID: 1989898199}
   m_Layer: 0
   m_Name: Canvas_PauseMenu
   m_TagString: Untagged
@@ -10177,6 +10275,27 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1989898199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1989898194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39f7bbd1e0b9f9e40bb0a5ba4f1631e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panelPauseMenu: {fileID: 572955501}
+  textScore: {fileID: 637160824}
+  textTime: {fileID: 701029928}
+  textTotalEnemyKillCount: {fileID: 757955249}
+  textTotalNormalDamagePlayerDone: {fileID: 1399106854}
+  textTotalUsedAmmoCount: {fileID: 1168000575}
+  textTotalGoldPlayerGain: {fileID: 1013723102}
+  textTotalDamagePlayerTaken: {fileID: 1529456732}
+  textUsedSkillCount: {fileID: 150527422}
 --- !u!1 &2001801545
 GameObject:
   m_ObjectHideFlags: 0
@@ -10379,7 +10498,7 @@ GameObject:
   - component: {fileID: 2044467982}
   - component: {fileID: 2044467981}
   m_Layer: 0
-  m_Name: Image_Text_DeadEnemy_Count_Background
+  m_Name: Image_EnemyKillCount_Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10591,7 +10710,7 @@ GameObject:
   - component: {fileID: 2056943038}
   - component: {fileID: 2056943037}
   m_Layer: 0
-  m_Name: Image_Text_Temp_Background (1)
+  m_Name: Image_TotalSkillDamage_PlayerDone_Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10611,7 +10730,7 @@ RectTransform:
   m_Children:
   - {fileID: 169769719}
   m_Father: {fileID: 1174729254}
-  m_RootOrder: 6
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

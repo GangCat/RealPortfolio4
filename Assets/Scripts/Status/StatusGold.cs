@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StatusGold : MonoBehaviour
 {
-    public OnGoldChangeDelegate OnGoldChangeCallback
+    public RetVoidRaramIntDelegate OnGoldChangeCallback
     {
         set 
         { 
@@ -57,5 +57,5 @@ public class StatusGold : MonoBehaviour
     [SerializeField]
     private int maxGold = 99999;
 
-    private OnGoldChangeDelegate onGoldChangeCallback = null;
+    private RetVoidRaramIntDelegate onGoldChangeCallback = null;
 }

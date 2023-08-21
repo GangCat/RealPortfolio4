@@ -5,46 +5,42 @@ using UnityEngine;
 [System.Serializable]
 public enum EDoorDir { None = -1, Front, Back, Left, Right }
 [System.Serializable]
-public enum EStageState { Start, Normal, Gold, Boss }
+public enum EStageState { Empty, Start, Normal, Gold, Boss }
 public class StageGenerator : MonoBehaviour
 {
-    public struct SStagePos
-    {
-        public int x;
-        public int y;
-        public int rank;
+    public delegate void RetvoidParamArrayStageDelegate(Stage[] _arrayStage);
 
-        public SStagePos(int _x, int _y, int _rank)
-        {
-            x = _x;
-            y = _y;
-            rank = _rank;
-        }
+    public void Init(RetvoidParamArrayStageDelegate _retListStageParamVoidCallback)
+    {
+        retListStageParamVoidCallback = _retListStageParamVoidCallback;
     }
 
-    public void GenerateLevel(int _minRoomCnt, OnPlayerMoveToNextStageDelegate _callback)
+    public void GenerateLevel(int _minRoomCnt, RetVoidParamVoidDelegate _callback)
     {
         minStageCnt = _minRoomCnt;
         arrayLength = Mathf.Clamp((int)(minStageCnt * 0.7f), 10, 31);
         arrayStage = new int[arrayLength, arrayLength];
-        System.Array.Clear(arrayStage, 0, arrayStage.Length);
+        System.Array.Clear(arrayStage, (int)EStageState.Empty, arrayStage.Length);
 
         while (!SetStagePosition())
             ResetLevel();
 
         StartCoroutine("GenerateLevelCoroutine", _callback);
+
     }
 
-    private IEnumerator GenerateLevelCoroutine(OnPlayerMoveToNextStageDelegate _callback)
+    private IEnumerator GenerateLevelCoroutine(RetVoidParamVoidDelegate _callback)
     {
         GameObject mapGo = null;
-        foreach(SStagePos room in listStage)
+        foreach(SStagePos room in listStagePos)
         {
-            if (room.rank == 0)
+            if (room.stageState == EStageState.Empty) continue;
+
+            if (room.stageState == EStageState.Start)
                 mapGo = Instantiate(StagePrefabs[(int)EStageState.Start], transform);
-            else if (room.rank < goldRank)
+            else if (room.stageState == EStageState.Normal)
                 mapGo = Instantiate(StagePrefabs[(int)EStageState.Normal], transform);
-            else if (room.rank < bossRank)
+            else if (room.stageState == EStageState.Gold)
                 mapGo = Instantiate(StagePrefabs[(int)EStageState.Gold], transform);
             else
                 mapGo = Instantiate(StagePrefabs[(int)EStageState.Boss], transform);
@@ -53,14 +49,15 @@ public class StageGenerator : MonoBehaviour
             float zPos = (room.y - (arrayLength >> 1)) * offsetZ;
             mapGo.transform.position = new Vector3(xPos, 0f, zPos);
             yield return null;
-            //yield return new WaitForSeconds(0.1f);
 
             SetBridge(room.x, room.y, mapGo);
-            mapGo.GetComponent<Stage>().Init(_callback);
+            mapGo.GetComponent<Stage>().Init(room.x, room.y, room.stageState, _callback);
             listStageGo.Add(mapGo);
+            listStage.Add(mapGo.GetComponent<Stage>());
             yield return null;
-            //yield return new WaitForSeconds(0.1f);
         }
+
+        retListStageParamVoidCallback?.Invoke(listStage.ToArray());
     }
 
     public void ResetLevel()
@@ -70,8 +67,8 @@ public class StageGenerator : MonoBehaviour
 
         arrayLength = Mathf.Clamp((int)(minStageCnt * 0.7f), 10, 31);
         arrayStage = new int[arrayLength, arrayLength];
-        System.Array.Clear(arrayStage, 0, arrayStage.Length);
-        listStage.Clear();
+        System.Array.Clear(arrayStage, (int)EStageState.Empty, arrayStage.Length);
+        listStagePos.Clear();
         listStageGo.Clear();
     }
 
@@ -82,16 +79,14 @@ public class StageGenerator : MonoBehaviour
         int tempRoomCnt = 0;
         int prevRank = 0;
         int randomRoom = 0;
-        goldRank = 0;
-        bossRank = 0;
 
         // 시작지점 초기화
-        listStage.Clear();
-        System.Array.Clear(arrayStage, 0, arrayStage.Length);
+        listStagePos.Clear();
+        System.Array.Clear(arrayStage, (int)EStageState.Empty, arrayStage.Length);
 
-        SStagePos roomPos = new SStagePos(arrayLength >> 1, arrayLength >> 1, 0);
+        SStagePos roomPos = new SStagePos(arrayLength >> 1, arrayLength >> 1, EStageState.Start);
         arrayStage[arrayLength >> 1, arrayLength >> 1] = 1;
-        listStage.Add(roomPos);
+        listStagePos.Add(roomPos);
 
         ++ttlRoomCnt;
 
@@ -103,9 +98,9 @@ public class StageGenerator : MonoBehaviour
             tempRoomCnt = 0;
             for (int i = prevRoomCnt; i < ttlRoomCnt; ++i)
             {
-                if (MyMathf.CheckRange(listStage[i].x, 1, arrayLength - 1) &&
-                    MyMathf.CheckRange(listStage[i].y, 1, arrayLength - 1))
-                    tempRoomCnt += SetStagePosInArray(listStage[i].x, listStage[i].y, prevRank + 1, ref randomRoom);
+                if (MyMathf.CheckRange(listStagePos[i].x, 1, arrayLength - 1) &&
+                    MyMathf.CheckRange(listStagePos[i].y, 1, arrayLength - 1))
+                    tempRoomCnt += SetStagePosInArray(listStagePos[i].x, listStagePos[i].y, EStageState.Normal, ref randomRoom);
             }
 
             prevRoomCnt = ttlRoomCnt;
@@ -113,16 +108,19 @@ public class StageGenerator : MonoBehaviour
             ++prevRank;
         }
 
-        goldRank = prevRank + 1;
-        bossRank = prevRank + 2;
-
         tempRoomCnt = 0;
 
         for (int i = 0; i < ttlRoomCnt; ++i)
         {
-            if (MyMathf.CheckRange(listStage[i].x, 1, arrayLength - 1) &&
-                MyMathf.CheckRange(listStage[i].y, 1, arrayLength - 1))
-                tempRoomCnt += SetStagePosInArray(listStage[i].x, listStage[i].y, goldRank, ref randomRoom, 4, true);
+            if (MyMathf.CheckRange(listStagePos[i].x, 1, arrayLength - 1) &&
+                MyMathf.CheckRange(listStagePos[i].y, 1, arrayLength - 1))
+                tempRoomCnt += SetStagePosInArray(
+                    listStagePos[i].x, 
+                    listStagePos[i].y, 
+                    EStageState.Gold, 
+                    ref randomRoom, 
+                    4, 
+                    true);
             if (tempRoomCnt > 1)
                 break;
         }
@@ -132,9 +130,15 @@ public class StageGenerator : MonoBehaviour
         tempRoomCnt = 0;
         for (int i = 0; i < ttlRoomCnt; ++i)
         {
-            if (MyMathf.CheckRange(listStage[i].x, 1, arrayLength - 1) &&
-                MyMathf.CheckRange(listStage[i].y, 1, arrayLength - 1))
-                tempRoomCnt += SetStagePosInArray(listStage[i].x, listStage[i].y, bossRank, ref randomRoom, 4, true);
+            if (MyMathf.CheckRange(listStagePos[i].x, 1, arrayLength - 1) &&
+                MyMathf.CheckRange(listStagePos[i].y, 1, arrayLength - 1))
+                tempRoomCnt += SetStagePosInArray(
+                    listStagePos[i].x, 
+                    listStagePos[i].y, 
+                    EStageState.Boss, 
+                    ref randomRoom, 
+                    4, 
+                    true);
             if (tempRoomCnt > 0)
                 break;
         }
@@ -142,16 +146,15 @@ public class StageGenerator : MonoBehaviour
             return false;
 
         return true;
-
-        // 랭크 1에 해당하는 방을 생성한다.
-        // 2번째로 생기는 방은 반드시 2~4개의 방이 생성됨.
-
-
-        // 최대 뻗어나갈 수 있는 방의 랭크 개수를 가지고 계산하자.
-        // 만약 누군가가 4르 ㄹ입력한다면 배열은 4의 2배 + 3 크기로 만들자.( 좌 우 끝에 비우기 위함)
     }
 
-    private int SetStagePosInArray(int _x, int _y, int _rank, ref int _randomRoom, int _roomCnt = 2, bool isSpecialRoom = false)
+    private int SetStagePosInArray(
+        int _x, 
+        int _y, 
+        EStageState _stageState, 
+        ref int _randomRoom, 
+        int _roomCnt = 2, 
+        bool isSpecialRoom = false)
     {
         List<SStagePos> listRoomPos = new List<SStagePos>();
         SStagePos roomPos;
@@ -165,7 +168,7 @@ public class StageGenerator : MonoBehaviour
 
         if (arrayStage[_x, _y + 1].Equals(0))
         {
-            roomPos = new SStagePos(_x, _y + 1, _rank);
+            roomPos = new SStagePos(_x, _y + 1, _stageState);
             listRoomPos.Add(roomPos);
         }
         else
@@ -173,7 +176,7 @@ public class StageGenerator : MonoBehaviour
 
         if (arrayStage[_x, _y - 1].Equals(0))
         {
-            roomPos = new SStagePos(_x, _y - 1, _rank);
+            roomPos = new SStagePos(_x, _y - 1, _stageState);
             listRoomPos.Add(roomPos);
         }
         else
@@ -181,7 +184,7 @@ public class StageGenerator : MonoBehaviour
 
         if (arrayStage[_x - 1, _y].Equals(0))
         {
-            roomPos = new SStagePos(_x - 1, _y, _rank);
+            roomPos = new SStagePos(_x - 1, _y, _stageState);
             listRoomPos.Add(roomPos);
         }
         else
@@ -189,7 +192,7 @@ public class StageGenerator : MonoBehaviour
 
         if (arrayStage[_x + 1, _y].Equals(0))
         {
-            roomPos = new SStagePos(_x + 1, _y, _rank);
+            roomPos = new SStagePos(_x + 1, _y, _stageState);
             listRoomPos.Add(roomPos);
         }
         else
@@ -210,8 +213,8 @@ public class StageGenerator : MonoBehaviour
                         continue;
                     else
                     {
-                        arrayStage[listRoomPos[i].x, listRoomPos[i].y] = 1 + _rank;
-                        listStage.Add(listRoomPos[i]);
+                        arrayStage[listRoomPos[i].x, listRoomPos[i].y] = (int)_stageState;
+                        listStagePos.Add(listRoomPos[i]);
                         return 1;
                     }
                 }
@@ -220,9 +223,9 @@ public class StageGenerator : MonoBehaviour
             }
 
             for (int i = 0; i < listRoomPos.Count; ++i)
-                arrayStage[listRoomPos[i].x, listRoomPos[i].y] = 1 + _rank;
+                arrayStage[listRoomPos[i].x, listRoomPos[i].y] = (int)_stageState;
 
-            listStage.AddRange(listRoomPos.ToArray());
+            listStagePos.AddRange(listRoomPos.ToArray());
         }
         ++_randomRoom;
 
@@ -289,11 +292,12 @@ public class StageGenerator : MonoBehaviour
 
     private void Awake()
     {
-        listStage = new List<SStagePos>();
+        listStagePos = new List<SStagePos>();
         listStageGo = new List<GameObject>();
+        listStage = new List<Stage>();
     }
 
-    [Header("- Start / Normal / Gold / Boss")]
+    [Header("- Empty / Start / Normal / Gold / Boss")]
     [SerializeField]
     private GameObject[] StagePrefabs = null;
 
@@ -311,11 +315,12 @@ public class StageGenerator : MonoBehaviour
 
     private int minStageCnt = 0;
     private int arrayLength = 0;
-    private int bossRank = 0;
-    private int goldRank = 0;
 
     private int[,] arrayStage = null;
 
-    private List<SStagePos> listStage = null;
+    private List<SStagePos> listStagePos = null;
     private List<GameObject> listStageGo = null;
+    private List<Stage> listStage = null;
+
+    public RetvoidParamArrayStageDelegate retListStageParamVoidCallback = null;
 }

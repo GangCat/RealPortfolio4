@@ -29,22 +29,22 @@ public class PlayerInputManager : MonoBehaviour, IPauseObserver, IBossEngageObse
         gameManager = GameManager.Instance;
     }
 
-    public void SetOnUseAmmoCallback(OnUseAmmoDelegate _callback)
+    public void SetOnUseAmmoCallback(RetVoidParamVoidDelegate _callback)
     {
         weaponAR.OnUseAmmoCallback = _callback;
     }
 
-    public void SetOnEnemyDamagedCallback(OnEnemyDamagedDelegate _callback)
+    public void SetOnEnemyDamagedCallback(RetVoidRaramIntDelegate _callback)
     {
         weaponAR.OnEnemyDamagedCallback = _callback;
     }
 
-    public void SetOnGoldChangeCallback(OnGoldChangeDelegate _callback)
+    public void SetOnGoldChangeCallback(RetVoidRaramIntDelegate _callback)
     {
         statusGold.OnGoldChangeCallback = _callback;
     }
 
-    public void SetOnPlayerDamagedCallback(OnPlayerDamagedDelegate _callback)
+    public void SetOnPlayerDamagedCallback(RetVoidParamVoidDelegate _callback)
     {
         playercollider.OnPlayerDamagedCallback = _callback;
     }
