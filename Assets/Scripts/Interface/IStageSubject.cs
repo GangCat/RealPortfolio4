@@ -19,5 +19,5 @@ public interface IStageSubject
     /// <summary>
     /// 갱신된 스테이지 정보 제공
     /// </summary>
-    void StageStart();
+    void StageStart(EStageState _stageState);
 }

@@ -11,14 +11,13 @@ public class EnemyManager : MonoBehaviour, IStageObserver, IPauseObserver
 
     public void CheckStage(int _curStage)
     {
-        curStage = _curStage;
         StartCoroutine("SpawnEnemy");
         enemyMemoryPool.CheckIsEnemyClear();
     }
 
-    public void CheckPaused(bool _isPaused)
+    public void CheckPause(bool _isPause)
     {
-        isPaused = _isPaused;
+        isPause = _isPause;
     }
 
     public void ResetSpawnPos(Vector3 _minSpawnPoint, Vector3 _maxSpawnPoint)
@@ -27,19 +26,19 @@ public class EnemyManager : MonoBehaviour, IStageObserver, IPauseObserver
         maxSpawnPosition = _maxSpawnPoint;
     }
 
-    public void InitEnemyClearCallback(RetVoidParamVoidDelegate _enemyClearCallback)
+    public void Init(RetVoidParamVoidDelegate _enemyClearCallback)
     {
         enemyMemoryPool.OnEnemyClearCallback = _enemyClearCallback;
     }
 
     private IEnumerator SpawnEnemy()
     {
-        int ttlEnemyCnt = enemySpawnCnt + (curStage * 2);
+        int ttlEnemyCnt = enemySpawnCnt;
 
         for (int i = 0; i < ttlEnemyCnt; ++i)
         {
             GameObject enemyGo = enemyMemoryPool.SpawnInit(
-                (EEnemyType)(Random.Range(0, (int)EEnemyType.None)),
+                (EEnemyType)(Random.Range(0, (int)EEnemyType.Length)),
                 GetRandomSpawnPosition(),
                 transform
                 );
@@ -54,7 +53,7 @@ public class EnemyManager : MonoBehaviour, IStageObserver, IPauseObserver
         float curTime = Time.time;
         while (Time.time - curTime < _delayTime)
         {
-            if (isPaused)
+            if (isPause)
                 curTime += Time.deltaTime;
 
             yield return null;
@@ -71,14 +70,14 @@ public class EnemyManager : MonoBehaviour, IStageObserver, IPauseObserver
 
     private void Awake()
     {
-        gameManager = GameManager.Instance;
+        gameMng = GameManager.Instance;
         enemyMemoryPool = GetComponent<EnemyMemoryPool>();
     }
 
     private void Start()
     {
-        gameManager.RegisterStageobserver(GetComponent<IStageObserver>());
-        gameManager.RegisterPauseObserver(GetComponent<IPauseObserver>());
+        gameMng.RegisterStageobserver(GetComponent<IStageObserver>());
+        gameMng.RegisterPauseObserver(GetComponent<IPauseObserver>());
         enemyMemoryPool.SetupEnemyMemoryPool(transform);
     }
 
@@ -89,14 +88,13 @@ public class EnemyManager : MonoBehaviour, IStageObserver, IPauseObserver
     private float spawnDelay = 1f;
 
     private int enemySpawnCnt = 5;
-    private int curStage = 0;
 
-    private bool isPaused = false;
+    private bool isPause = false;
 
     private Vector3 minSpawnPosition = Vector3.zero;
     private Vector3 maxSpawnPosition = Vector3.zero;
 
-    private GameManager         gameManager = null;
-    private EnemyMemoryPool     enemyMemoryPool = null;
-    private RetVoidParamVoidDelegate onEnemyDeadCallback = null;
+    private GameManager                 gameMng = null;
+    private EnemyMemoryPool             enemyMemoryPool = null;
+    private RetVoidParamVoidDelegate    onEnemyDeadCallback = null;
 }

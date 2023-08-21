@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveGate : MonoBehaviour
+public class Gate : MonoBehaviour
 {
-    public void OpenDoor()
+    public void OpenGate()
     {
-        StartCoroutine("OpenDoorCoroutine");
+        StartCoroutine("OpenGateCoroutine");
     }
 
-    private IEnumerator OpenDoorCoroutine()
+    private IEnumerator OpenGateCoroutine()
     {
         Vector3 oriPos = transform.localPosition;
         Vector3 targetPos = transform.localPosition;
@@ -22,6 +22,4 @@ public class MoveGate : MonoBehaviour
             yield return null;
         }
     }
-
-
 }

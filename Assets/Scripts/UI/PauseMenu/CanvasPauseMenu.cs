@@ -7,8 +7,8 @@ public class CanvasPauseMenu : MonoBehaviour
 {
     public void Init(
         RetVoidParamVoidDelegate _onClickResumeCallback, 
-        RetVoidParamStringDelegate _onClickRestartCallback,
-        RetVoidParamStringDelegate _onClickMainCallback)
+        RetVoidParamStringDelegate _onClickChangeSceneCallback
+        )
     {
         StopCoroutine("CalcScore");
         StopCoroutine("Timer");
@@ -23,10 +23,11 @@ public class CanvasPauseMenu : MonoBehaviour
         sec = 0;
         min = 0;
 
-        SetButtonDelegate(_onClickResumeCallback, _onClickRestartCallback, _onClickMainCallback);
+        SetButtonDelegate(_onClickResumeCallback, _onClickChangeSceneCallback);
 
         panelPauseMenu.Init();
         StartCoroutine("CalcScore");
+        StartCoroutine("Timer");
     }
 
     public void ShowPauseMenu()
@@ -123,8 +124,7 @@ public class CanvasPauseMenu : MonoBehaviour
 
     private void SetButtonDelegate(
         RetVoidParamVoidDelegate _onClickResumeCallback,
-        RetVoidParamStringDelegate _onClickRestartCallback,
-        RetVoidParamStringDelegate _onClickMainCallback)
+        RetVoidParamStringDelegate _onClickChangeSceneCallback)
     {
         Button btnResume = GetComponentInChildren<ButtonResume>().transform.GetComponent<Button>();
         btnResume.onClick.AddListener(
@@ -138,7 +138,7 @@ public class CanvasPauseMenu : MonoBehaviour
         btnRestart.onClick.AddListener(
             () =>
             {
-                _onClickRestartCallback?.Invoke("Stage");
+                _onClickChangeSceneCallback?.Invoke("Stage");
             }
             );
 
@@ -146,7 +146,7 @@ public class CanvasPauseMenu : MonoBehaviour
         btnMain.onClick.AddListener(
             () =>
             {
-                _onClickMainCallback?.Invoke("MainMenu");
+                _onClickChangeSceneCallback?.Invoke("MainMenu");
             }
             );
     }

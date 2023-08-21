@@ -11,12 +11,12 @@ public class ConsoleToNextStage : InteractiveBase
 
     public override void Use()
     {
-        door.OpenDoor();
+        gate.OpenGate();
     }
 
     private void Awake()
     {
-        door = GetComponentInChildren<MoveGate>();
+        gate = GetComponentInChildren<Gate>();
     }
 
     private void Start()
@@ -24,5 +24,5 @@ public class ConsoleToNextStage : InteractiveBase
         GetComponent<Collider>().enabled = false;
     }
 
-    private MoveGate door = null;
+    private Gate gate = null;
 }

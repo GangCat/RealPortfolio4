@@ -1,7 +1,9 @@
 public delegate void RetVoidParamVoidDelegate();
 public delegate void RetVoidRaramIntDelegate(int _valueInt);
 public delegate void RetVoidParamStringDelegate(string _valueStr);
+public delegate void RetVoidParamStageStateDelegate(EStageState _valueStageState);
 
+[System.Serializable]
 public struct SStagePos
 {
     public int x;

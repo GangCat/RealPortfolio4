@@ -60,8 +60,6 @@ public class EnemyMemoryPool : MonoBehaviour
         memoryPools[(int)_enemyType].DeactivatePoolItem(_enemyGo);
     }
 
-
-
     private void Awake()
     {
         memoryPools = new MemoryPool[enemyPrefabs.Length];

@@ -32,7 +32,7 @@ public abstract class ItemBase : MonoBehaviour, IPauseObserver
         gameManager = GameManager.Instance;
     }
 
-    public void CheckPaused(bool _isPaused)
+    public void CheckPause(bool _isPaused)
     {
         isPaused = _isPaused;
     }

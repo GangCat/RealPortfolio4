@@ -9,23 +9,25 @@ public class StageManager : MonoBehaviour
     /// </summary>
     public void ActivateDoorTrigger(int _curStageNum)
     {
-        stages[_curStageNum].ActivateDoorTrigger();
+        listStage[_curStageNum].ActivateDoorTrigger();
     }
 
     public Vector3 GetMinSpawnPoint(int _curStageNum)
     {
-        return stages[_curStageNum].GetMinSpawnPoint();
+        return listStage[_curStageNum].GetMinSpawnPoint();
     }
 
     public Vector3 GetMaxSpawnPoint(int _curStageNum)
     {
-        return stages[_curStageNum].GetMaxSpawnPoint();
+        return listStage[_curStageNum].GetMaxSpawnPoint();
     }
 
-    public void Init(int _minRoomCnt, RetVoidParamVoidDelegate _callback)
+    public void Init(int _minRoomCnt, 
+        RetVoidParamVoidDelegate _moveStageCallback,
+        RetVoidParamStageStateDelegate _stageEnterCallback
+        )
     {
-        stageGenerator.Init(SetListStage);
-        stageGenerator.GenerateLevel(_minRoomCnt, _callback);
+        stageGenerator.GenerateLevel(_minRoomCnt, _moveStageCallback, _stageEnterCallback, SetListStage);
     }
 
     private void Awake()

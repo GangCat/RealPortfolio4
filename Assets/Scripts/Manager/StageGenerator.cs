@@ -10,12 +10,11 @@ public class StageGenerator : MonoBehaviour
 {
     public delegate void RetvoidParamArrayStageDelegate(Stage[] _arrayStage);
 
-    public void Init(RetvoidParamArrayStageDelegate _retListStageParamVoidCallback)
-    {
-        retListStageParamVoidCallback = _retListStageParamVoidCallback;
-    }
-
-    public void GenerateLevel(int _minRoomCnt, RetVoidParamVoidDelegate _callback)
+    public void GenerateLevel(int _minRoomCnt, 
+        RetVoidParamVoidDelegate _moveStageCallback,
+        RetVoidParamStageStateDelegate _stageEnterCallback,
+        RetvoidParamArrayStageDelegate _retListStageParamVoidCallback
+        )
     {
         minStageCnt = _minRoomCnt;
         arrayLength = Mathf.Clamp((int)(minStageCnt * 0.7f), 10, 31);
@@ -25,11 +24,14 @@ public class StageGenerator : MonoBehaviour
         while (!SetStagePosition())
             ResetLevel();
 
-        StartCoroutine("GenerateLevelCoroutine", _callback);
-
+        StartCoroutine(GenerateLevelCoroutine(_moveStageCallback, _stageEnterCallback, _retListStageParamVoidCallback));
     }
 
-    private IEnumerator GenerateLevelCoroutine(RetVoidParamVoidDelegate _callback)
+    private IEnumerator GenerateLevelCoroutine(
+        RetVoidParamVoidDelegate _moveStageCallback,
+        RetVoidParamStageStateDelegate _stageEnterCallback,
+        RetvoidParamArrayStageDelegate _retListStageParamVoidCallback
+        )
     {
         GameObject mapGo = null;
         foreach(SStagePos room in listStagePos)
@@ -51,13 +53,13 @@ public class StageGenerator : MonoBehaviour
             yield return null;
 
             SetBridge(room.x, room.y, mapGo);
-            mapGo.GetComponent<Stage>().Init(room.x, room.y, room.stageState, _callback);
+            mapGo.GetComponent<Stage>().Init(room.x, room.y, room.stageState, _moveStageCallback, _stageEnterCallback);
             listStageGo.Add(mapGo);
             listStage.Add(mapGo.GetComponent<Stage>());
             yield return null;
         }
 
-        retListStageParamVoidCallback?.Invoke(listStage.ToArray());
+        _retListStageParamVoidCallback?.Invoke(listStage.ToArray());
     }
 
     public void ResetLevel()
@@ -108,6 +110,7 @@ public class StageGenerator : MonoBehaviour
             ++prevRank;
         }
 
+        #region GenGoldStage
         tempRoomCnt = 0;
 
         for (int i = 0; i < ttlRoomCnt; ++i)
@@ -127,8 +130,11 @@ public class StageGenerator : MonoBehaviour
         if (tempRoomCnt != 2)
             return false;
 
+        #endregion
+
+        #region GenBossStage
         tempRoomCnt = 0;
-        for (int i = 0; i < ttlRoomCnt; ++i)
+        for (int i = 1; i < ttlRoomCnt; ++i)
         {
             if (MyMathf.CheckRange(listStagePos[i].x, 1, arrayLength - 1) &&
                 MyMathf.CheckRange(listStagePos[i].y, 1, arrayLength - 1))
@@ -144,6 +150,8 @@ public class StageGenerator : MonoBehaviour
         }
         if (tempRoomCnt != 1)
             return false;
+
+        #endregion
 
         return true;
     }
@@ -164,7 +172,6 @@ public class StageGenerator : MonoBehaviour
             _roomCnt = 3;
             _randomRoom = -1;
         }
-
 
         if (arrayStage[_x, _y + 1].Equals(0))
         {

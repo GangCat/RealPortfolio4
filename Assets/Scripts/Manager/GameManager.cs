@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour, IPauseSubject, IBossEngageSubject, ISt
     {
         isPaused = !isPaused;
         foreach (IPauseObserver observer in pauseObserverList)
-            observer.CheckPaused(isPaused);
+            observer.CheckPause(isPaused);
 
         if (isPaused)
         {
@@ -83,8 +83,14 @@ public class GameManager : MonoBehaviour, IPauseSubject, IBossEngageSubject, ISt
         stageObserverList.Remove(_observer);
     }
 
-    public void StageStart()
+    public void StageStart(EStageState _stageState)
     {
+        if (_stageState.Equals(EStageState.Start))
+        {
+            StageClear();
+            return;
+        }
+
         ++curStage;
         ResetEnemySpawnPos();
 
@@ -109,40 +115,31 @@ public class GameManager : MonoBehaviour, IPauseSubject, IBossEngageSubject, ISt
             mainMenuMng.OnButtonMainCallback = ChangeScene;
 
         if(playerMng != null)
-        {
             playerMng.Init(
-                UpdateUsedAmmo,
-                UpdateGold,
-                UpdateEnemyDamaged,
-                UpdateDamagedCount
+                UpdateTotalUsedAmmoCount,
+                UpdateTotalGoldPlayerGain,
+                UpdateTotalAttackDamage,
+                UpdateTotalDamagePlayerTaken
                 );
-        }
 
         if (enemyMng != null)
         {
-            enemyMng.SetOnEnemyDeadCallback(CalcDeadEnemy);
-            enemyMng.InitEnemyClearCallback(StageClear);
+            enemyMng.SetOnEnemyDeadCallback(UpdateTotalEnemyKillCount);
+            enemyMng.Init(StageClear);
         }
 
         if(canvasPauseMenu != null)
-        {
-            canvasPauseMenu.Init(TogglePause, ChangeScene, ChangeScene);
-            canvasPauseMenu.UpdateTime();
-        }
+            canvasPauseMenu.Init(TogglePause, ChangeScene);
 
         if(stageMng != null)
-        {
-            stageMng.Init(7, StageStart);
-        }
+            stageMng.Init(7, MovePlayerAndCamera, StageStart);
 
     }
 
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.LeftControl))
-        {
             GameStart();
-        }
     }
 
     public void GameStart()
@@ -156,27 +153,27 @@ public class GameManager : MonoBehaviour, IPauseSubject, IBossEngageSubject, ISt
         enemyMng.ResetSpawnPos(stageMng.GetMinSpawnPoint(curStage), stageMng.GetMaxSpawnPoint(curStage));
     }
 
-    private void UpdateUsedAmmo()
+    private void UpdateTotalUsedAmmoCount()
     {
         canvasPauseMenu.UpdateTotalUsedAmmoCount();
     }
 
-    private void CalcDeadEnemy()
+    private void UpdateTotalEnemyKillCount()
     {
         canvasPauseMenu.UpdateTotalEnemyKillCount();
     }
 
-    private void UpdateGold(int _increasedGold)
+    private void UpdateTotalGoldPlayerGain(int _increasedGold)
     {
         canvasPauseMenu.UpdateTotalGoldPlayerGain(_increasedGold);
     }
 
-    private void UpdateDamagedCount()
+    private void UpdateTotalDamagePlayerTaken()
     {
         canvasPauseMenu.UpdateTotalDamagePlayerTaken();
     }
 
-    private void UpdateEnemyDamaged(int _dmg)
+    private void UpdateTotalAttackDamage(int _dmg)
     {
         canvasPauseMenu.UpdateTotalAttackDamage(_dmg);
     }
@@ -191,20 +188,25 @@ public class GameManager : MonoBehaviour, IPauseSubject, IBossEngageSubject, ISt
         stageMng.ActivateDoorTrigger(curStage);
     }
 
+    private void MovePlayerAndCamera()
+    {
+        Debug.Log("playerMng");
+    }
+
     private GameManager() { }
 
     [SerializeField]
-    private CanvasPauseMenu canvasPauseMenu = null;
+    private CanvasPauseMenu     canvasPauseMenu = null;
     [SerializeField]
-    private PlayerInputManager playerMng = null;
+    private PlayerInputManager  playerMng = null;
     [SerializeField]
-    private EnemyManager enemyMng = null;
+    private EnemyManager        enemyMng = null;
     [SerializeField]
-    private MainMenuUIManager mainMenuMng = null;
+    private MainMenuUIManager   mainMenuMng = null;
     [SerializeField]
-    private StageManager stageMng = null;
+    private StageManager        stageMng = null;
     [SerializeField]
-    private CrystalManager crystalMng = null;
+    private CrystalManager      crystalMng = null;
     
 
     private bool isPaused = false;

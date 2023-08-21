@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EEnemyType { Melee, Range, None }
+public enum EEnemyType { None = -1, Melee, Range, Length }
 public class EnemyController : MonoBehaviour, IPauseObserver
 {
     public delegate void OnDeactivateDelegate(EEnemyType _enemyType, GameObject _enemyGo);
@@ -41,7 +41,7 @@ public class EnemyController : MonoBehaviour, IPauseObserver
         }
     }
 
-    public void CheckPaused(bool _isPaused)
+    public void CheckPause(bool _isPaused)
     {
         isPaused = _isPaused;
 

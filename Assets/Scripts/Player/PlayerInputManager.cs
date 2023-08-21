@@ -42,7 +42,7 @@ public class PlayerInputManager : MonoBehaviour, IPauseObserver, IBossEngageObse
         playercollider.OnPlayerDamagedCallback = _playerDamagedCallback;
     }
 
-    public void CheckPaused(bool _isPaused)
+    public void CheckPause(bool _isPaused)
     {
         isPaused = _isPaused;
 

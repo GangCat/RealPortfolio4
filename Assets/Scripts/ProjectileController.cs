@@ -91,7 +91,7 @@ public class ProjectileController : MonoBehaviour, IPauseObserver
             impactPool.SpawnInit(_collision.GetContact(0).point, _dir);
     }
 
-    public void CheckPaused(bool _isPaused)
+    public void CheckPause(bool _isPaused)
     {
         isPaused = _isPaused;
         trail.IsPaused(isPaused);
