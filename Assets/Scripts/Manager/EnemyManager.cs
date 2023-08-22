@@ -2,15 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyManager : MonoBehaviour, IStageObserver, IPauseObserver
+public class EnemyManager : MonoBehaviour, IPauseObserver
 {
     public void SetOnEnemyDeadCallback(RetVoidParamVoidDelegate _onEnemyDeadCallback)
     {
         onEnemyDeadCallback = _onEnemyDeadCallback;
     }
 
-    public void CheckStage(int _curStage)
+    public void PlayerEnterStage(Vector3 _minSpawnPoint, Vector3 _maxSpawnPoint)
     {
+        ResetSpawnPos(_minSpawnPoint, _maxSpawnPoint);
         StartCoroutine("SpawnEnemy");
         enemyMemoryPool.CheckIsEnemyClear();
     }
@@ -20,14 +21,18 @@ public class EnemyManager : MonoBehaviour, IStageObserver, IPauseObserver
         isPause = _isPause;
     }
 
+
     public void ResetSpawnPos(Vector3 _minSpawnPoint, Vector3 _maxSpawnPoint)
     {
         minSpawnPosition = _minSpawnPoint;
         maxSpawnPosition = _maxSpawnPoint;
     }
 
-    public void Init(RetVoidParamVoidDelegate _enemyClearCallback)
+    public void Init(
+        RetVoidParamVoidDelegate _onEnemyDeadCallback,
+        RetVoidParamVoidDelegate _enemyClearCallback)
     {
+        onEnemyDeadCallback = _onEnemyDeadCallback;
         enemyMemoryPool.OnEnemyClearCallback = _enemyClearCallback;
     }
 
@@ -76,7 +81,6 @@ public class EnemyManager : MonoBehaviour, IStageObserver, IPauseObserver
 
     private void Start()
     {
-        gameMng.RegisterStageobserver(GetComponent<IStageObserver>());
         gameMng.RegisterPauseObserver(GetComponent<IPauseObserver>());
         enemyMemoryPool.SetupEnemyMemoryPool(transform);
     }

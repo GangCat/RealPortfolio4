@@ -1,25 +1,68 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Gate : MonoBehaviour
 {
-    public void OpenGate()
+    public void Init(RetVoidParamVec3Vec3Delegate _warpPlayerCallback)
     {
-        StartCoroutine("OpenGateCoroutine");
+        warpPlayerCallback = _warpPlayerCallback;
+        trigger.Init(MovePlayer);
+        console.Init(OpenGate);
     }
 
-    private IEnumerator OpenGateCoroutine()
+    private void MovePlayer()
     {
-        Vector3 oriPos = transform.localPosition;
-        Vector3 targetPos = transform.localPosition;
-        targetPos.z -= 2f;
-        float curTime = Time.time;
-        while (Time.time - curTime < 1)
-        {
-            transform.localPosition = Vector3.Slerp(oriPos, targetPos, Time.time - curTime);
-
-            yield return null;
-        }
+        warpPlayerCallback?.Invoke(GetPlayerWarpDir(), GetCameraWarpDir());
     }
+
+    private Vector3 GetPlayerWarpDir()
+    {
+        if (gateDir.Equals(EGateDir.Forward))
+            return Vector3.forward;
+        if (gateDir.Equals(EGateDir.Back))
+            return Vector3.back;
+        if (gateDir.Equals(EGateDir.Left))
+            return Vector3.left;
+        if (gateDir.Equals(EGateDir.Right))
+            return Vector3.right;
+
+        return Vector3.zero;
+    }
+
+    private Vector3 GetCameraWarpDir()
+    {
+        if (gateDir.Equals(EGateDir.Forward))
+            return Vector3.forward;
+        if (gateDir.Equals(EGateDir.Back))
+            return Vector3.back;
+        if (gateDir.Equals(EGateDir.Left))
+            return Vector3.left;
+        if (gateDir.Equals(EGateDir.Right))
+            return Vector3.right;
+
+        return Vector3.zero;
+    }
+
+    private void OpenGate()
+    {
+        gate.OpenGate();
+    }
+
+    public void ActivateGate()
+    {
+        console.ActivateGate();
+    }
+
+    [SerializeField]
+    private GateTrigger trigger = null;
+    [SerializeField]
+    private GateConsole console = null;
+    [SerializeField]
+    private GateDoor    gate = null;
+    [SerializeField]
+    private EGateDir    gateDir =  EGateDir.None;
+
+    private RetVoidParamVec3Vec3Delegate warpPlayerCallback = null;
 }

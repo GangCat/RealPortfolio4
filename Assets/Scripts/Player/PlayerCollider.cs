@@ -50,7 +50,7 @@ public class PlayerCollider : MonoBehaviour
         else if (_other.CompareTag("Interactive"))
         {
             if (GetComponent<PlayerInputManager>().IsInteract)
-                _other.GetComponent<InteractiveBase>().Use();
+                _other.GetComponent<InteractiveObjectBase>().Use();
         }
     }
 

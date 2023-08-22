@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour, IPauseSubject, IBossEngageSubject, IStageSubject
+public class GameManager : MonoBehaviour, IPauseSubject, IBossEngageSubject
 {
     public static GameManager Instance
     {
@@ -72,40 +72,30 @@ public class GameManager : MonoBehaviour, IPauseSubject, IBossEngageSubject, ISt
     }
     #endregion
 
-    #region StageObserver
-    public void RegisterStageobserver(IStageObserver _observer)
+    public void StageStart(Stage _stage)
     {
-        stageObserverList.Add(_observer);
-    }
+        stageMng.SetCurStage(_stage);
 
-    public void RemoveStageObserver(IStageObserver _observer)
-    {
-        stageObserverList.Remove(_observer);
-    }
+        if (stageMng.GetIsCurStageClear()) StageClear();
 
-    public void StageStart(EStageState _stageState)
-    {
-        if (_stageState.Equals(EStageState.Start))
+        if (stageMng.GetCurStageState().Equals(EStageState.Normal))
         {
-            StageClear();
+            stageMng.PlayerEnterStage();
+            // 맵 들어가고 일시정지 하기
+            return;
+        }
+        else if (stageMng.GetCurStageState().Equals(EStageState.Boss))
+        {
+            ToggleBossEngage();
+            // 맵 들어가고 일시정지 하기
             return;
         }
 
-        ++curStage;
-        ResetEnemySpawnPos();
-
-        foreach (IStageObserver observer in stageObserverList)
-            observer.CheckStage(curStage);
-
+        StageClear();
     }
-    #endregion
 
     private void Awake()
     {
-        canvasPauseMenu = FindAnyObjectByType<CanvasPauseMenu>();
-        playerMng = FindAnyObjectByType<PlayerInputManager>();
-        enemyMng = FindAnyObjectByType<EnemyManager>();
-        stageMng = FindAnyObjectByType<StageManager>();
         instance = this;
     }
 
@@ -123,34 +113,17 @@ public class GameManager : MonoBehaviour, IPauseSubject, IBossEngageSubject, ISt
                 );
 
         if (enemyMng != null)
-        {
-            enemyMng.SetOnEnemyDeadCallback(UpdateTotalEnemyKillCount);
-            enemyMng.Init(StageClear);
-        }
+            enemyMng.Init(UpdateTotalEnemyKillCount, StageClear);
 
         if(canvasPauseMenu != null)
             canvasPauseMenu.Init(TogglePause, ChangeScene);
 
         if(stageMng != null)
-            stageMng.Init(7, MovePlayerAndCamera, StageStart);
+            stageMng.Init(7, MovePlayer, StageStart, enemyMng.PlayerEnterStage);
 
-    }
+        if (cameraMng != null)
+            cameraMng.Init();
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.LeftControl))
-            GameStart();
-    }
-
-    public void GameStart()
-    {
-        ResetEnemySpawnPos();
-        enemyMng.CheckStage(curStage);
-    }
-
-    private void ResetEnemySpawnPos()
-    {
-        enemyMng.ResetSpawnPos(stageMng.GetMinSpawnPoint(curStage), stageMng.GetMaxSpawnPoint(curStage));
     }
 
     private void UpdateTotalUsedAmmoCount()
@@ -185,16 +158,24 @@ public class GameManager : MonoBehaviour, IPauseSubject, IBossEngageSubject, ISt
 
     private void StageClear()
     {
-        stageMng.ActivateDoorTrigger(curStage);
+        stageMng.UpdateCurStageClearState(true);
+        stageMng.ActivateDoorTrigger();
     }
 
-    private void MovePlayerAndCamera()
+    private void MovePlayer(Vector3 _warpPlayerDir,Vector3 _warpCameraDir)
     {
+        playerMng.MovePlayerToNextStage(_warpPlayerDir);
+        cameraMng.WarpCamera(_warpCameraDir);
         Debug.Log("playerMng");
     }
 
     private GameManager() { }
 
+    [Header("-Main Menu Manager")]
+    [SerializeField]
+    private MainMenuUIManager   mainMenuMng = null;
+
+    [Header("-Game Managers")]
     [SerializeField]
     private CanvasPauseMenu     canvasPauseMenu = null;
     [SerializeField]
@@ -202,23 +183,18 @@ public class GameManager : MonoBehaviour, IPauseSubject, IBossEngageSubject, ISt
     [SerializeField]
     private EnemyManager        enemyMng = null;
     [SerializeField]
-    private MainMenuUIManager   mainMenuMng = null;
-    [SerializeField]
     private StageManager        stageMng = null;
     [SerializeField]
     private CrystalManager      crystalMng = null;
+    [SerializeField]
+    private CameraManager       cameraMng = null; 
     
 
     private bool isPaused = false;
     private bool isBossEngage = false;
 
-    private int curStage = 0;
-
     private static GameManager instance = null;
 
     private List<IPauseObserver> pauseObserverList = new List<IPauseObserver>();
     private List<IBossEngageObserver> bossEngageObserverList = new List<IBossEngageObserver>();
-    private List<IStageObserver> stageObserverList = new List<IStageObserver>();
-
-
 }

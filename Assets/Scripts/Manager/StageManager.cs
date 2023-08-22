@@ -4,31 +4,61 @@ using UnityEngine;
 
 public class StageManager : MonoBehaviour
 {
-    /// <summary>
-    /// 다음 스테이지로 향할 수 있는 문의 트리거를 활성화
-    /// </summary>
-    public void ActivateDoorTrigger(int _curStageNum)
+    public void Init(
+    int _minRoomCnt,
+    RetVoidParamVec3Vec3Delegate _warpPlayerCallback,
+    RetVoidParamStageClassDelegate _stageEnterCallback,
+    RetVoidParamVec3Vec3Delegate _enemySpawnPointCallback)
     {
-        listStage[_curStageNum].ActivateDoorTrigger();
+        stageGenerator.GenerateLevel(_minRoomCnt, _warpPlayerCallback, _stageEnterCallback, SetListStage);
+        enemySpawnPointCallback = _enemySpawnPointCallback;
     }
 
-    public Vector3 GetMinSpawnPoint(int _curStageNum)
+    public void SetCurStage(Stage _stage)
     {
-        return listStage[_curStageNum].GetMinSpawnPoint();
+        curStage = _stage;
     }
 
-    public Vector3 GetMaxSpawnPoint(int _curStageNum)
+    public bool GetIsCurStageClear()
     {
-        return listStage[_curStageNum].GetMaxSpawnPoint();
+        return curStage.IsClear;
     }
 
-    public void Init(int _minRoomCnt, 
-        RetVoidParamVoidDelegate _moveStageCallback,
-        RetVoidParamStageStateDelegate _stageEnterCallback
-        )
+    public EStageState GetCurStageState()
     {
-        stageGenerator.GenerateLevel(_minRoomCnt, _moveStageCallback, _stageEnterCallback, SetListStage);
+        return curStage.StageState;
     }
+
+    public Vector3 GetPlayerSpawnPoint()
+    {
+        return curStage.GetPlayerSpawnPoint();
+    }
+
+    public void ActivateDoorTrigger()
+    {
+        curStage.ActivateGate();
+    }
+
+    public Vector3 GetCurStageMinSpawnPoint()
+    {
+        return curStage.GetMinSpawnPoint();
+    }
+
+    public Vector3 GetCurStageMaxSpawnPoint()
+    {
+        return curStage.GetMaxSpawnPoint();
+    }
+
+    public void UpdateCurStageClearState(bool _isClear)
+    {
+        curStage.UpdateClearState(_isClear);
+    }
+
+    public void PlayerEnterStage()
+    {
+        enemySpawnPointCallback?.Invoke(GetCurStageMinSpawnPoint(), GetCurStageMaxSpawnPoint());
+    }
+
 
     private void Awake()
     {
@@ -39,12 +69,18 @@ public class StageManager : MonoBehaviour
     private void SetListStage(Stage[] _arrayStage)
     {
         listStage.AddRange(_arrayStage);
+        listStage[0].UpdateClearState(true);
+        listStage[0].ActivateGate();
     }
+
+
 
     [SerializeField]
     private GameObject[] stagePrefabs = null;
 
-    private Stage[] stages = null;
     private StageGenerator stageGenerator = null;
     private List<Stage> listStage = null;
+    private Stage curStage = null;
+    private RetVoidParamVec3Vec3Delegate enemySpawnPointCallback = null;
+
 }

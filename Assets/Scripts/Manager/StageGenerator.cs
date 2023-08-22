@@ -2,17 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public enum EDoorDir { None = -1, Front, Back, Left, Right }
-[System.Serializable]
-public enum EStageState { Empty, Start, Normal, Gold, Boss }
 public class StageGenerator : MonoBehaviour
 {
     public delegate void RetvoidParamArrayStageDelegate(Stage[] _arrayStage);
 
-    public void GenerateLevel(int _minRoomCnt, 
-        RetVoidParamVoidDelegate _moveStageCallback,
-        RetVoidParamStageStateDelegate _stageEnterCallback,
+    public void GenerateLevel(int _minRoomCnt,
+        RetVoidParamVec3Vec3Delegate _warpPlayerCallback,
+        RetVoidParamStageClassDelegate _stageEnterCallback,
         RetvoidParamArrayStageDelegate _retListStageParamVoidCallback
         )
     {
@@ -24,12 +20,12 @@ public class StageGenerator : MonoBehaviour
         while (!SetStagePosition())
             ResetLevel();
 
-        StartCoroutine(GenerateLevelCoroutine(_moveStageCallback, _stageEnterCallback, _retListStageParamVoidCallback));
+        StartCoroutine(GenerateLevelCoroutine(_warpPlayerCallback, _stageEnterCallback, _retListStageParamVoidCallback));
     }
 
     private IEnumerator GenerateLevelCoroutine(
-        RetVoidParamVoidDelegate _moveStageCallback,
-        RetVoidParamStageStateDelegate _stageEnterCallback,
+        RetVoidParamVec3Vec3Delegate _warpPlayerCallback,
+        RetVoidParamStageClassDelegate _stageEnterCallback,
         RetvoidParamArrayStageDelegate _retListStageParamVoidCallback
         )
     {
@@ -53,7 +49,7 @@ public class StageGenerator : MonoBehaviour
             yield return null;
 
             SetBridge(room.x, room.y, mapGo);
-            mapGo.GetComponent<Stage>().Init(room.x, room.y, room.stageState, _moveStageCallback, _stageEnterCallback);
+            mapGo.GetComponent<Stage>().Init(room.x, room.y, room.stageState, _warpPlayerCallback, _stageEnterCallback);
             listStageGo.Add(mapGo);
             listStage.Add(mapGo.GetComponent<Stage>());
             yield return null;
@@ -273,20 +269,20 @@ public class StageGenerator : MonoBehaviour
     {
         GameObject tempGo = null;
 
-        tempGo = SelectDoorOrWall(_x, _y + 1, EDoorDir.Front, _parentGo);
+        tempGo = SelectDoorOrWall(_x, _y + 1, EGateDir.Forward, _parentGo);
         tempGo.transform.localPosition = Vector3.zero;
 
-        tempGo = SelectDoorOrWall(_x, _y - 1, EDoorDir.Back, _parentGo);
+        tempGo = SelectDoorOrWall(_x, _y - 1, EGateDir.Back, _parentGo);
         tempGo.transform.localPosition = Vector3.zero;
 
-        tempGo = SelectDoorOrWall(_x - 1, _y, EDoorDir.Left, _parentGo);
+        tempGo = SelectDoorOrWall(_x - 1, _y, EGateDir.Left, _parentGo);
         tempGo.transform.localPosition = Vector3.zero;
 
-        tempGo = SelectDoorOrWall(_x + 1, _y, EDoorDir.Right, _parentGo);
+        tempGo = SelectDoorOrWall(_x + 1, _y, EGateDir.Right, _parentGo);
         tempGo.transform.localPosition = Vector3.zero;
     }
 
-    private GameObject SelectDoorOrWall(int _x, int _y, EDoorDir _dir, GameObject _parentGo)
+    private GameObject SelectDoorOrWall(int _x, int _y, EGateDir _dir, GameObject _parentGo)
     {
         if (!MyMathf.CheckRange(_x, 0, arrayLength) || !MyMathf.CheckRange(_y, 0, arrayLength))
             return Instantiate(wallPrefabs[(int)_dir], _parentGo.transform);

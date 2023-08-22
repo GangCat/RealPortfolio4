@@ -42,6 +42,11 @@ public class PlayerInputManager : MonoBehaviour, IPauseObserver, IBossEngageObse
         playercollider.OnPlayerDamagedCallback = _playerDamagedCallback;
     }
 
+    public void MovePlayerToNextStage(Vector3 _desPos)
+    {
+        transform.position += (_desPos * warpDistance);
+    }
+
     public void CheckPause(bool _isPaused)
     {
         isPaused = _isPaused;
@@ -143,7 +148,8 @@ public class PlayerInputManager : MonoBehaviour, IPauseObserver, IBossEngageObse
             weaponAR.ChangeState(EWeaponState.Reload);
     }
 
-
+    [SerializeField]
+    private float warpDistance = 15f;
 
     private float x = 0.0f;
     private float z = 0.0f;

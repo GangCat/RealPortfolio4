@@ -6,13 +6,28 @@ public class Stage : MonoBehaviour
 {
     public int GetX => stagePos.x;
     public int GetY => stagePos.y;
-    public EStageState GetStageState => stagePos.stageState;
+    public EStageState StageState => stagePos.stageState;
     public bool IsClear => isClear;
 
-    public void ActivateDoorTrigger()
+    public void ActivateGate()
     {
-        foreach (DoorToNextStage door in doors)
-            door.ActivateDoorTrigger();
+        foreach (Gate door in doors)
+            door.ActivateGate();
+    }
+
+    public Vector3 GetPosition()
+    {
+        return transform.position;
+    }
+
+    public void UpdateClearState(bool _isClear)
+    {
+        isClear = _isClear;
+    }
+
+    public Vector3 GetPlayerSpawnPoint()
+    {
+        return Vector3.zero;
     }
 
     public Vector3 GetMinSpawnPoint()
@@ -29,13 +44,13 @@ public class Stage : MonoBehaviour
         int _x,
         int _y,
         EStageState _stageState,
-        RetVoidParamVoidDelegate _moveStageCallback,
-        RetVoidParamStageStateDelegate _stageEnterCallback)
+        RetVoidParamVec3Vec3Delegate _warpPlayerCallback,
+        RetVoidParamStageClassDelegate _stageEnterCallback)
     {
-        doors = GetComponentsInChildren<DoorToNextStage>();
+        doors = GetComponentsInChildren<Gate>();
 
-        foreach (DoorToNextStage door in doors)
-            door.Init(_moveStageCallback);
+        foreach (Gate door in doors)
+            door.Init(_warpPlayerCallback);
 
         stagePos.x = _x;
         stagePos.y = _y;
@@ -50,21 +65,22 @@ public class Stage : MonoBehaviour
         {
             if (isClear) return;
 
-            stageEnterCallback?.Invoke(stagePos.stageState);
+            stageEnterCallback?.Invoke(this);
         }
     }
 
-    private DoorToNextStage[] doors = null;
+    private Gate[] doors = null;
 
     [SerializeField]
     private MinSpawnPoint minSpawnPoint = null;
     [SerializeField]
     private MaxSpawnPoint maxSpawnPoint = null;
 
+    [SerializeField]
     private bool isClear = false;
 
     [SerializeField]
     private SStagePos stagePos;
 
-    private RetVoidParamStageStateDelegate stageEnterCallback = null;
+    private RetVoidParamStageClassDelegate stageEnterCallback = null;
 }
