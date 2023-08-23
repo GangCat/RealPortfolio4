@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8900621740921987006}
   - component: {fileID: 1034353650817285746}
   m_Layer: 0
-  m_Name: P_Stage_Normal
+  m_Name: P_Stage_Start
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -55,7 +55,7 @@ MonoBehaviour:
   stagePos:
     x: 0
     y: 0
-    stageState: 2
+    stageState: 1
 --- !u!65 &1034353650817285746
 BoxCollider:
   m_ObjectHideFlags: 0

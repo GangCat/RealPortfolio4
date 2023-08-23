@@ -1,68 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Gate : MonoBehaviour
 {
-    public void Init(RetVoidParamVec3Vec3Delegate _warpPlayerCallback)
+    public void Init()
     {
-        warpPlayerCallback = _warpPlayerCallback;
-        trigger.Init(MovePlayer);
-        console.Init(OpenGate);
+        door = GetComponentInChildren<GateDoor>();
+        door.Init();
     }
 
-    private void MovePlayer()
+    public void OpenGate()
     {
-        warpPlayerCallback?.Invoke(GetPlayerWarpDir(), GetCameraWarpDir());
+        door.OpenGateDoor();
     }
 
-    private Vector3 GetPlayerWarpDir()
+    public void CloseGate()
     {
-        if (gateDir.Equals(EGateDir.Forward))
-            return Vector3.forward;
-        if (gateDir.Equals(EGateDir.Back))
-            return Vector3.back;
-        if (gateDir.Equals(EGateDir.Left))
-            return Vector3.left;
-        if (gateDir.Equals(EGateDir.Right))
-            return Vector3.right;
-
-        return Vector3.zero;
+        door.CloseGateDoor();
     }
 
-    private Vector3 GetCameraWarpDir()
-    {
-        if (gateDir.Equals(EGateDir.Forward))
-            return Vector3.forward;
-        if (gateDir.Equals(EGateDir.Back))
-            return Vector3.back;
-        if (gateDir.Equals(EGateDir.Left))
-            return Vector3.left;
-        if (gateDir.Equals(EGateDir.Right))
-            return Vector3.right;
-
-        return Vector3.zero;
-    }
-
-    private void OpenGate()
-    {
-        gate.OpenGate();
-    }
-
-    public void ActivateGate()
-    {
-        console.ActivateGate();
-    }
-
-    [SerializeField]
-    private GateTrigger trigger = null;
-    [SerializeField]
-    private GateConsole console = null;
-    [SerializeField]
-    private GateDoor    gate = null;
-    [SerializeField]
-    private EGateDir    gateDir =  EGateDir.None;
-
-    private RetVoidParamVec3Vec3Delegate warpPlayerCallback = null;
+    private GateDoor door = null;
 }

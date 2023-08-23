@@ -83,11 +83,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5a47f458a3b89846812e01ca8b120b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trigger: {fileID: 2594917415411507982}
-  console: {fileID: 8805738089029751229}
-  gate: {fileID: 4889844760925053279}
+  gateTrigger: {fileID: 2594917415411507982}
+  gateControlConsole: {fileID: 8805738089029751229}
+  gate: {fileID: 7879092037704503770}
   gateDir: 1
-  playerMoveDistanceToNextStage: 15
 --- !u!1001 &1191393304624381580
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -141,7 +140,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5916473289663028237, guid: 256d51bc9c3c18c4ca79bbba4c80a475, type: 3}
       propertyPath: m_Name
-      value: P_GateConsole
+      value: P_GateControlConsole
       objectReference: {fileID: 0}
     - target: {fileID: 6140728381303671972, guid: 256d51bc9c3c18c4ca79bbba4c80a475, type: 3}
       propertyPath: m_ReceiveShadows
@@ -182,22 +181,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1185858745808871928, guid: ac8d4a57fa60abd408c7df5b712abe78, type: 3}
       propertyPath: m_Name
-      value: P_GateDoor
+      value: P_Gate
       objectReference: {fileID: 0}
     - target: {fileID: 1185858745809222516, guid: ac8d4a57fa60abd408c7df5b712abe78, type: 3}
       propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1185858745809222516, guid: ac8d4a57fa60abd408c7df5b712abe78, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1185858745809222516, guid: ac8d4a57fa60abd408c7df5b712abe78, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1185858745809222516, guid: ac8d4a57fa60abd408c7df5b712abe78, type: 3}
-      propertyPath: m_LocalScale.z
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1185858745809222516, guid: ac8d4a57fa60abd408c7df5b712abe78, type: 3}
@@ -240,10 +227,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1185858745809222516, guid: ac8d4a57fa60abd408c7df5b712abe78, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ac8d4a57fa60abd408c7df5b712abe78, type: 3}
 --- !u!4 &787541368568975313 stripped
@@ -251,9 +234,9 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1185858745809222516, guid: ac8d4a57fa60abd408c7df5b712abe78, type: 3}
   m_PrefabInstance: {fileID: 1916541730417882277}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4889844760925053279 stripped
+--- !u!114 &7879092037704503770 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6432507423142647290, guid: ac8d4a57fa60abd408c7df5b712abe78, type: 3}
+  m_CorrespondingSourceObject: {fileID: 8629113464687256959, guid: ac8d4a57fa60abd408c7df5b712abe78, type: 3}
   m_PrefabInstance: {fileID: 1916541730417882277}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}

@@ -5635,7 +5635,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StagePrefabs:
   - {fileID: 1790289142325292124, guid: 3d30eeefd6994b7438b1cc5f88c792f1, type: 3}
-  - {fileID: 526914341876950082, guid: 0592e3ed608b3f943b7eb8a9c31b6b2c, type: 3}
+  - {fileID: 526914341876950082, guid: d5d1fc2fb7f1c3f4ea2934d3d999cc9a, type: 3}
   - {fileID: 526914341876950082, guid: 0592e3ed608b3f943b7eb8a9c31b6b2c, type: 3}
   - {fileID: 526914341876950082, guid: 78a42a56b2a8ab24ba4c329144467cb8, type: 3}
   - {fileID: 526914341876950082, guid: 3865344434cec4445b98e1d77c121434, type: 3}
@@ -5644,7 +5644,7 @@ MonoBehaviour:
   - {fileID: 6821442217191637186, guid: 543ee3ff332cd4e4b8b2096498a56eec, type: 3}
   - {fileID: 230500903083501067, guid: 8c4e486917c244749a88c25cb1145684, type: 3}
   - {fileID: 7628134117740739581, guid: efe211337ed50424e83011ac344b41d1, type: 3}
-  doorPrefabs:
+  gatePrefabs:
   - {fileID: 8777050757786298751, guid: 4c01506db25efe54baa34e92057ed4f3, type: 3}
   - {fileID: 9138624376795390299, guid: 450b50e1d70f58c45baa2eb3dc0f9e49, type: 3}
   - {fileID: 5801005988956090686, guid: c545cb44665f0214ba628bd77ae62a20, type: 3}

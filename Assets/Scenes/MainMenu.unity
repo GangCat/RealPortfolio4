@@ -1225,11 +1225,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10a3557bae866e3408b3ea201eb10fe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenu: {fileID: 0}
-  playerMgr: {fileID: 0}
-  enemyMgr: {fileID: 0}
-  mainMenuMgr: {fileID: 856467515}
-  stageMgr: {fileID: 0}
+  mainMenuMng: {fileID: 856467515}
+  canvasPauseMenu: {fileID: 0}
+  playerMng: {fileID: 0}
+  enemyMng: {fileID: 0}
+  stageMng: {fileID: 0}
+  crystalMng: {fileID: 0}
+  cameraMng: {fileID: 0}
 --- !u!4 &2137734461
 Transform:
   m_ObjectHideFlags: 0

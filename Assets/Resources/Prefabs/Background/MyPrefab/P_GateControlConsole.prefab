@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7691279304152641329}
   - component: {fileID: 2078382662438966310}
   m_Layer: 6
-  m_Name: P_GateConsole
+  m_Name: P_GateControlConsole
   m_TagString: Interactive
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

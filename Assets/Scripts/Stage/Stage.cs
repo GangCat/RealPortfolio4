@@ -11,7 +11,7 @@ public class Stage : MonoBehaviour
 
     public void ActivateGate()
     {
-        foreach (Gate door in doors)
+        foreach (GateSystemController door in doors)
             door.ActivateGate();
     }
 
@@ -47,9 +47,9 @@ public class Stage : MonoBehaviour
         RetVoidParamVec3Vec3Delegate _warpPlayerCallback,
         RetVoidParamStageClassDelegate _stageEnterCallback)
     {
-        doors = GetComponentsInChildren<Gate>();
+        doors = GetComponentsInChildren<GateSystemController>();
 
-        foreach (Gate door in doors)
+        foreach (GateSystemController door in doors)
             door.Init(_warpPlayerCallback);
 
         stagePos.x = _x;
@@ -69,7 +69,7 @@ public class Stage : MonoBehaviour
         }
     }
 
-    private Gate[] doors = null;
+    private GateSystemController[] doors = null;
 
     [SerializeField]
     private MinSpawnPoint minSpawnPoint = null;

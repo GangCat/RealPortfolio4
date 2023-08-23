@@ -288,7 +288,7 @@ public class StageGenerator : MonoBehaviour
             return Instantiate(wallPrefabs[(int)_dir], _parentGo.transform);
 
         if (arrayStage[_x, _y] > 0)
-            return Instantiate(doorPrefabs[(int)_dir], _parentGo.transform);
+            return Instantiate(gatePrefabs[(int)_dir], _parentGo.transform);
         else
             return Instantiate(wallPrefabs[(int)_dir], _parentGo.transform);
     }
@@ -304,11 +304,11 @@ public class StageGenerator : MonoBehaviour
     [SerializeField]
     private GameObject[] StagePrefabs = null;
 
-    [Header("-Front / Back / Left / Right")]
+    [Header("-Forward / Back / Left / Right")]
     [SerializeField]
     private GameObject[] wallPrefabs = null;
     [SerializeField]
-    private GameObject[] doorPrefabs = null;
+    private GameObject[] gatePrefabs = null;
 
     [Header("- Room Offset")]
     [SerializeField]

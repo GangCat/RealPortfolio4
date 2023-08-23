@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 1185858745805771188}
   - component: {fileID: 1185858745806904636}
   - component: {fileID: 1185858745811093808}
-  - component: {fileID: 6432507423142647290}
+  - component: {fileID: 1234779002061593567}
   m_Layer: 0
-  m_Name: Door
+  m_Name: GateDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -98,7 +98,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.0304, y: 2.3000002, z: 1.9849001}
   m_Center: {x: 0.0013000001, y: 1.2909, z: -1.1926501}
---- !u!114 &6432507423142647290
+--- !u!114 &1234779002061593567
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,7 +107,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1185858745808806398}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8c4be9a70e3c6446b53f0021044164f, type: 3}
+  m_Script: {fileID: 11500000, guid: 0d9a15e89e79523449069f9574ebd7fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1185858745808871928
@@ -123,8 +123,9 @@ GameObject:
   - component: {fileID: 1185858745806850280}
   - component: {fileID: 1185858745811021982}
   - component: {fileID: 1185858745811013942}
+  - component: {fileID: 8629113464687256959}
   m_Layer: 0
-  m_Name: P_GateDoor
+  m_Name: P_Gate
   m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -140,7 +141,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -9.382018, y: 0.10000038, z: 11.144657}
   m_LocalScale: {x: 2, y: 2, z: 2}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1185858745809155604}
   m_Father: {fileID: 0}
@@ -222,3 +223,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.3316, y: 2.7936, z: 0.4}
   m_Center: {x: 0, y: 1.3968, z: -0.2}
+--- !u!114 &8629113464687256959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1185858745808871928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8c4be9a70e3c6446b53f0021044164f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

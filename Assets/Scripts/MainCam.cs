@@ -21,7 +21,7 @@ public class MainCam : MonoBehaviour
     {
         while (Vector3.SqrMagnitude(transform.position - _destPos) > 0.01f)
         {
-            transform.position = Vector3.Lerp(transform.position, _destPos, 0.3f);
+            transform.position = Vector3.Lerp(transform.position, _destPos, 0.1f);
             yield return null;
         }
         transform.position = _destPos;
