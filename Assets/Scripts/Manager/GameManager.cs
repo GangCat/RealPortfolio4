@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour, IPauseSubject, IBossEngageSubject
     {
         isBossEngage = !isBossEngage;
         foreach (IBossEngageObserver observer in bossEngageObserverList)
-            observer.CheckBossEngage(isBossEngage);
+            observer.ToggleBossEngage();
     }
     #endregion
 
@@ -119,11 +119,17 @@ public class GameManager : MonoBehaviour, IPauseSubject, IBossEngageSubject
             canvasPauseMenu.Init(TogglePause, ChangeScene);
 
         if(stageMng != null)
-            stageMng.Init(7, MovePlayer, StageStart, enemyMng.PlayerEnterStage);
+            stageMng.Init(7, MovePlayer, StageStart, enemyMng.PlayerEnterStage, InitBossMng);
 
         if (cameraMng != null)
             cameraMng.Init();
 
+    }
+
+    private void InitBossMng(Vector3 _bossSpawnPos)
+    {
+        if (BossMng != null)
+            BossMng.Init(stageMng.GetBossSpawnPos(), curLevel, playerMng.GetTransform());
     }
 
     private void UpdateTotalUsedAmmoCount()
@@ -187,8 +193,11 @@ public class GameManager : MonoBehaviour, IPauseSubject, IBossEngageSubject
     [SerializeField]
     private CrystalManager      crystalMng = null;
     [SerializeField]
-    private CameraManager       cameraMng = null; 
-    
+    private CameraManager       cameraMng = null;
+    [SerializeField]
+    private BossManager         BossMng = null;
+
+    private int curLevel = 0;
 
     private bool isPaused = false;
     private bool isBossEngage = false;

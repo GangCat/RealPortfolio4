@@ -3076,6 +3076,7 @@ GameObject:
   - component: {fileID: 2017450356195955315}
   - component: {fileID: 2017450356195955313}
   - component: {fileID: 2017450356195955314}
+  - component: {fileID: 7883049327304190880}
   m_Layer: 15
   m_Name: P_BossIronreaver2_WithCollider 1
   m_TagString: Boss
@@ -3092,7 +3093,7 @@ Transform:
   m_GameObject: {fileID: 4752446645711790616}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: -165.37, y: -0.53, z: -12.93}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4752446645711510058}
@@ -3174,8 +3175,8 @@ MonoBehaviour:
   onHPEvent:
     m_PersistentCalls:
       m_Calls: []
-  curHP: 2000
-  maxHP: 2000
+  curHp: 100
+  maxHp: 200
 --- !u!114 &2017450356195955314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3192,6 +3193,18 @@ MonoBehaviour:
   walkSpeed: 8
   maxRunSpeed: 8
   maxWalkSpeed: 8
+--- !u!114 &7883049327304190880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4752446645711790616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c4b29269b5208346b607e19dd6e3ec4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4752446645711790796
 GameObject:
   m_ObjectHideFlags: 0

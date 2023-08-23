@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IBossEngageObserver
 {
-    void CheckBossEngage(bool _isPaused);
+    void ToggleBossEngage();
 }

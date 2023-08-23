@@ -207,6 +207,21 @@ public class BossFSM : MonoBehaviour
         gameObject.layer = 13;
         bossAnim.Play("Dead", -1, 0.0f);
         yield return null;
+        StartCoroutine("IsEmptyAnimPlayingCoroutine");
+    }
+
+    private IEnumerator IsEmptyAnimPlayingCoroutine()
+    {
+        while (true)
+        {
+            if (bossAnim.CurAnimationIs("Empty"))
+            {
+                bossDeadCallback?.Invoke();
+                yield break;
+            }
+
+            yield return null;
+        }
     }
 
     private IEnumerator CalcSkillDelay()
@@ -306,8 +321,10 @@ public class BossFSM : MonoBehaviour
         statusSpeed = GetComponent<StatusSpeed>();
     }
 
-    private void OnEnable()
+    public void Init(Transform _targetTr, RetVoidParamVoidDelegate _bossDeadCallback)
     {
+        targetTr = _targetTr;
+        bossDeadCallback = _bossDeadCallback;
         ChangeState(EBossState.Birth);
     }
 
@@ -352,4 +369,5 @@ public class BossFSM : MonoBehaviour
 
     private EBossState bossState = EBossState.None;
     private StatusSpeed statusSpeed = null;
+    private RetVoidParamVoidDelegate bossDeadCallback = null;
 }

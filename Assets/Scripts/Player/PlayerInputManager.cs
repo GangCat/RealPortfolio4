@@ -42,6 +42,11 @@ public class PlayerInputManager : MonoBehaviour, IPauseObserver, IBossEngageObse
         playercollider.OnPlayerDamagedCallback = _playerDamagedCallback;
     }
 
+    public Transform GetTransform()
+    {
+        return transform;
+    }
+
     public void MovePlayerToNextStage(Vector3 _desPos)
     {
         transform.position += (_desPos * warpDistance);
@@ -56,9 +61,9 @@ public class PlayerInputManager : MonoBehaviour, IPauseObserver, IBossEngageObse
         weaponAR.CheckPaused(isPaused);
     }
 
-    public void CheckBossEngage(bool _isPaused)
+    public void ToggleBossEngage()
     {
-        isBossEngage = _isPaused;
+        isBossEngage = true;
     }
 
 

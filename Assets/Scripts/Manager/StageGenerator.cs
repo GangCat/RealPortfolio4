@@ -9,7 +9,7 @@ public class StageGenerator : MonoBehaviour
     public void GenerateLevel(int _minRoomCnt,
         RetVoidParamVec3Vec3Delegate _warpPlayerCallback,
         RetVoidParamStageClassDelegate _stageEnterCallback,
-        RetvoidParamArrayStageDelegate _retListStageParamVoidCallback
+        RetvoidParamArrayStageDelegate _returnStageArrayCallback
         )
     {
         minStageCnt = _minRoomCnt;
@@ -20,13 +20,13 @@ public class StageGenerator : MonoBehaviour
         while (!SetStagePosition())
             ResetLevel();
 
-        StartCoroutine(GenerateLevelCoroutine(_warpPlayerCallback, _stageEnterCallback, _retListStageParamVoidCallback));
+        StartCoroutine(GenerateLevelCoroutine(_warpPlayerCallback, _stageEnterCallback, _returnStageArrayCallback));
     }
 
     private IEnumerator GenerateLevelCoroutine(
         RetVoidParamVec3Vec3Delegate _warpPlayerCallback,
         RetVoidParamStageClassDelegate _stageEnterCallback,
-        RetvoidParamArrayStageDelegate _retListStageParamVoidCallback
+        RetvoidParamArrayStageDelegate _returnStageArrayCallback
         )
     {
         GameObject mapGo = null;
@@ -55,7 +55,7 @@ public class StageGenerator : MonoBehaviour
             yield return null;
         }
 
-        _retListStageParamVoidCallback?.Invoke(listStage.ToArray());
+        _returnStageArrayCallback?.Invoke(listStage.ToArray());
     }
 
     public void ResetLevel()
@@ -324,6 +324,4 @@ public class StageGenerator : MonoBehaviour
     private List<SStagePos> listStagePos = null;
     private List<GameObject> listStageGo = null;
     private List<Stage> listStage = null;
-
-    public RetvoidParamArrayStageDelegate retListStageParamVoidCallback = null;
 }

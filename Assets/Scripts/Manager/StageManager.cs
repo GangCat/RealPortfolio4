@@ -8,10 +8,12 @@ public class StageManager : MonoBehaviour
     int _minRoomCnt,
     RetVoidParamVec3Vec3Delegate _warpPlayerCallback,
     RetVoidParamStageClassDelegate _stageEnterCallback,
-    RetVoidParamVec3Vec3Delegate _enemySpawnPointCallback)
+    RetVoidParamVec3Vec3Delegate _enemySpawnPointCallback,
+    RetVoidParamVec3Delegate _bossSpawnPointCallback)
     {
         stageGenerator.GenerateLevel(_minRoomCnt, _warpPlayerCallback, _stageEnterCallback, SetListStage);
         enemySpawnPointCallback = _enemySpawnPointCallback;
+        bossSpawnPointCallback = _bossSpawnPointCallback;
     }
 
     public void SetCurStage(Stage _stage)
@@ -29,14 +31,20 @@ public class StageManager : MonoBehaviour
         return curStage.StageState;
     }
 
-    public Vector3 GetPlayerSpawnPoint()
-    {
-        return curStage.GetPlayerSpawnPoint();
-    }
-
     public void ActivateDoorTrigger()
     {
         curStage.ActivateGate();
+    }
+
+    public Vector3 GetBossSpawnPos()
+    {
+        foreach(Stage stage in listStage)
+        {
+            if (stage.StageState.Equals(EStageState.Boss))
+                return stage.GetPosition();
+        }
+
+        return Vector3.zero;
     }
 
     public Vector3 GetCurStageMinSpawnPoint()
@@ -71,6 +79,7 @@ public class StageManager : MonoBehaviour
         listStage.AddRange(_arrayStage);
         listStage[0].UpdateClearState(true);
         listStage[0].ActivateGate();
+        bossSpawnPointCallback?.Invoke(listStage[listStage.Count - 1].GetPosition());
     }
 
 
@@ -82,5 +91,5 @@ public class StageManager : MonoBehaviour
     private List<Stage> listStage = null;
     private Stage curStage = null;
     private RetVoidParamVec3Vec3Delegate enemySpawnPointCallback = null;
-
+    private RetVoidParamVec3Delegate bossSpawnPointCallback = null;
 }

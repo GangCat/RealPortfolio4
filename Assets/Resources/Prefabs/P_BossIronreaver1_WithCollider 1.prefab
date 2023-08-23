@@ -2324,13 +2324,14 @@ GameObject:
   - component: {fileID: 8741327247032567662}
   - component: {fileID: 7000959088567240822}
   - component: {fileID: 8207263625851725998}
+  - component: {fileID: 5696475948187499711}
   m_Layer: 15
   m_Name: P_BossIronreaver1_WithCollider 1
   m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2027767521777334598
 Transform:
   m_ObjectHideFlags: 0
@@ -2340,7 +2341,7 @@ Transform:
   m_GameObject: {fileID: 2027767521777286970}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: -165.37, y: -0.53, z: -12.93}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2027767521777380198}
@@ -2425,8 +2426,8 @@ MonoBehaviour:
   onHPEvent:
     m_PersistentCalls:
       m_Calls: []
-  curHP: 4000
-  maxHP: 4000
+  curHp: 100
+  maxHp: 200
 --- !u!114 &8207263625851725998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2443,6 +2444,18 @@ MonoBehaviour:
   walkSpeed: 7
   maxRunSpeed: 7
   maxWalkSpeed: 7
+--- !u!114 &5696475948187499711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2027767521777286970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c4b29269b5208346b607e19dd6e3ec4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2027767522385382067
 GameObject:
   m_ObjectHideFlags: 0
