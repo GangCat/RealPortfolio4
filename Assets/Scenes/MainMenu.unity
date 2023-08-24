@@ -97,8 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 8859dc1a3b54dd44082b019cea433acb, type: 2}
-  m_LightingSettings: {fileID: 4890085278179872738, guid: 7ebc39a667d89554d8024feca8cf985f, type: 2}
+  m_LightingDataAsset: {fileID: 0}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 5edbb4b51a4bc184097bb99f706160dd, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1232,6 +1232,7 @@ MonoBehaviour:
   stageMng: {fileID: 0}
   crystalMng: {fileID: 0}
   cameraMng: {fileID: 0}
+  BossMng: {fileID: 0}
 --- !u!4 &2137734461
 Transform:
   m_ObjectHideFlags: 0

@@ -47,7 +47,7 @@ public class PlayerInputManager : MonoBehaviour, IPauseObserver, IBossEngageObse
         return transform;
     }
 
-    public void MovePlayerToNextStage(Vector3 _desPos)
+    public void WarpPlayerToNextStage(Vector3 _desPos)
     {
         transform.position += (_desPos * warpDistance);
     }

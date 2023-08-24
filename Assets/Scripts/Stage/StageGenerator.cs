@@ -7,8 +7,7 @@ public class StageGenerator : MonoBehaviour
     public delegate void RetvoidParamArrayStageDelegate(Stage[] _arrayStage);
 
     public void GenerateLevel(int _minRoomCnt,
-        RetVoidParamVec3Vec3Delegate _warpPlayerCallback,
-        RetVoidParamStageClassDelegate _stageEnterCallback,
+        RetVoidParamVec3Delegate _warpPlayerCallback,
         RetvoidParamArrayStageDelegate _returnStageArrayCallback
         )
     {
@@ -20,12 +19,11 @@ public class StageGenerator : MonoBehaviour
         while (!SetStagePosition())
             ResetLevel();
 
-        StartCoroutine(GenerateLevelCoroutine(_warpPlayerCallback, _stageEnterCallback, _returnStageArrayCallback));
+        StartCoroutine(GenerateLevelCoroutine(_warpPlayerCallback, _returnStageArrayCallback));
     }
 
     private IEnumerator GenerateLevelCoroutine(
-        RetVoidParamVec3Vec3Delegate _warpPlayerCallback,
-        RetVoidParamStageClassDelegate _stageEnterCallback,
+        RetVoidParamVec3Delegate _warpPlayerCallback,
         RetvoidParamArrayStageDelegate _returnStageArrayCallback
         )
     {
@@ -49,9 +47,10 @@ public class StageGenerator : MonoBehaviour
             yield return null;
 
             SetBridge(room.x, room.y, mapGo);
-            mapGo.GetComponent<Stage>().Init(room.x, room.y, room.stageState, _warpPlayerCallback, _stageEnterCallback);
+            mapGo.GetComponent<Stage>().Init(room.x, room.y, room.stageState, _warpPlayerCallback);
             listStageGo.Add(mapGo);
             listStage.Add(mapGo.GetComponent<Stage>());
+            mapGo.SetActive(false);
             yield return null;
         }
 

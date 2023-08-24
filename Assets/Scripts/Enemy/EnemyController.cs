@@ -3,24 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum EEnemyType { None = -1, Melee, Range, Length }
-public class EnemyController : MonoBehaviour, IPauseObserver
+public class EnemyController : MonoBehaviour
 {
     public delegate void OnDeactivateDelegate(EEnemyType _enemyType, GameObject _enemyGo);
-    private OnDeactivateDelegate onDeactivateCallback = null;
 
     public OnDeactivateDelegate OnDeactivateCallback
     {
         set => onDeactivateCallback = value;
     }
 
-    public RetVoidParamVoidDelegate OnEnemyDeadCallback
-    {
-        set => onEnemyDeadCallback = value;
-    }
-
     public void Init(EEnemyType _enemyType)
     {
         enemyType = _enemyType;
+    }
+
+    public void CheckPause(bool _isPaused)
+    {
+        isPaused = _isPaused;
+
+        if (isPaused)
+            anim.StartPlayback();
+        else
+            anim.StopPlayback();
+
+        weapon.TogglePause();
     }
 
     public void TakeDmg(float _dmg)
@@ -41,18 +47,6 @@ public class EnemyController : MonoBehaviour, IPauseObserver
         }
     }
 
-    public void CheckPause(bool _isPaused)
-    {
-        isPaused = _isPaused;
-
-        if (isPaused)
-            anim.StartPlayback();
-        else
-            anim.StopPlayback();
-
-        weapon.TogglePause();
-    }
-
     public void Setup(GameObject _target, RetVoidParamVoidDelegate _onEnemyDeadCallback)
     {
         targetTr = _target.transform;
@@ -68,12 +62,6 @@ public class EnemyController : MonoBehaviour, IPauseObserver
         statusSpeed = GetComponent<StatusSpeed>();
         anim = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody>();
-        gameManager = GameManager.Instance;
-    }
-
-    private void Start()
-    {
-        gameManager.RegisterPauseObserver(GetComponent<IPauseObserver>());
     }
 
     private void Update()
@@ -222,7 +210,7 @@ public class EnemyController : MonoBehaviour, IPauseObserver
     private StatusHP statusHp = null;
     private StatusSpeed statusSpeed = null;
     private Animator anim = null;
-    private GameManager gameManager = null;
-    private RetVoidParamVoidDelegate onEnemyDeadCallback = null;
     private EEnemyType enemyType = EEnemyType.None;
+    private RetVoidParamVoidDelegate onEnemyDeadCallback = null;
+    private OnDeactivateDelegate onDeactivateCallback = null;
 }

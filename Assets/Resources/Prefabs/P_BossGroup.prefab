@@ -58,9 +58,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7462187690484754383}
     m_Modifications:
+    - target: {fileID: 1031999263, guid: 0e43ed5ce9ec5d1418faa5337284fd0c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1031999266, guid: 0e43ed5ce9ec5d1418faa5337284fd0c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1031999267, guid: 0e43ed5ce9ec5d1418faa5337284fd0c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1997577222863127999, guid: 0e43ed5ce9ec5d1418faa5337284fd0c, type: 3}
       propertyPath: m_Name
       value: BossIronreaver3_WithCollider
+      objectReference: {fileID: 0}
+    - target: {fileID: 1997577222863127999, guid: 0e43ed5ce9ec5d1418faa5337284fd0c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1997577222863442773, guid: 0e43ed5ce9ec5d1418faa5337284fd0c, type: 3}
       propertyPath: m_RootOrder
@@ -118,7 +134,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 1997577222963196331, guid: 0e43ed5ce9ec5d1418faa5337284fd0c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1997577222963196332, guid: 0e43ed5ce9ec5d1418faa5337284fd0c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1997577223937603679, guid: 0e43ed5ce9ec5d1418faa5337284fd0c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 1997577222963196331, guid: 0e43ed5ce9ec5d1418faa5337284fd0c, type: 3}
+    - {fileID: 1997577223937603679, guid: 0e43ed5ce9ec5d1418faa5337284fd0c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0e43ed5ce9ec5d1418faa5337284fd0c, type: 3}
 --- !u!4 &225262219969346687 stripped
 Transform:

@@ -9,6 +9,27 @@ public class Stage : MonoBehaviour
     public EStageState StageState => stagePos.stageState;
     public bool IsClear => isClear;
 
+    public void Init(
+    int _x,
+    int _y,
+    EStageState _stageState,
+    RetVoidParamVec3Delegate _warpPlayerCallback)
+    {
+        doors = GetComponentsInChildren<GateSystemController>();
+
+        foreach (GateSystemController door in doors)
+            door.Init(_warpPlayerCallback);
+
+        stagePos.x = _x;
+        stagePos.y = _y;
+        stagePos.stageState = _stageState;
+    }
+
+    public void SetActive(bool _isActive)
+    {
+        gameObject.SetActive(_isActive);
+    }
+
     public void ActivateGate()
     {
         foreach (GateSystemController door in doors)
@@ -40,34 +61,17 @@ public class Stage : MonoBehaviour
         return maxSpawnPoint.GetPosition();
     }
 
-    public void Init(
-        int _x,
-        int _y,
-        EStageState _stageState,
-        RetVoidParamVec3Vec3Delegate _warpPlayerCallback,
-        RetVoidParamStageClassDelegate _stageEnterCallback)
-    {
-        doors = GetComponentsInChildren<GateSystemController>();
 
-        foreach (GateSystemController door in doors)
-            door.Init(_warpPlayerCallback);
 
-        stagePos.x = _x;
-        stagePos.y = _y;
-        stagePos.stageState = _stageState;
-        stageEnterCallback = _stageEnterCallback;
+    //private void OnTriggerEnter(Collider _other)
+    //{
+    //    if (_other.CompareTag("Player"))
+    //    {
+    //        if (isClear) return;
 
-    }
-
-    private void OnTriggerEnter(Collider _other)
-    {
-        if (_other.CompareTag("Player"))
-        {
-            if (isClear) return;
-
-            stageEnterCallback?.Invoke(this);
-        }
-    }
+    //        stageEnterCallback?.Invoke(this);
+    //    }
+    //}
 
     private GateSystemController[] doors = null;
 
@@ -82,5 +86,5 @@ public class Stage : MonoBehaviour
     [SerializeField]
     private SStagePos stagePos;
 
-    private RetVoidParamStageClassDelegate stageEnterCallback = null;
+    //private RetVoidParamStageClassDelegate stageEnterCallback = null;
 }

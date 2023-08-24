@@ -45,13 +45,13 @@ public class CanvasPauseMenu : MonoBehaviour
         StartCoroutine("Timer");
     }
 
-    public void UpdateTotalUsedAmmoCount(/*int _totalCntUsedAmmo*/)
+    public void UpdateTotalUsedAmmoCount()
     {
         ++totalUsedAmmoCnt;
         textTotalUsedAmmoCount.UpdateTotalUsedAmmoCount(totalUsedAmmoCnt);
     }
 
-    public void UpdateTotalEnemyKillCount(/*int _totalEnemyKillCnt*/)
+    public void UpdateTotalEnemyKillCount()
     {
         ++totalEnemyKillCnt;
         textTotalEnemyKillCount.UpdateTotalEnemyKillCount(totalEnemyKillCnt);
@@ -63,7 +63,7 @@ public class CanvasPauseMenu : MonoBehaviour
         textTotalGoldPlayerGain.UpdateTotalGoldPlayerGain(totalGoldGain);
     }
 
-    public void UpdateTotalDamagePlayerTaken(/*int _totalDamageCntPlayerGain*/)
+    public void UpdateTotalDamagePlayerGain()
     {
         ++totalDamageCntPlayerGain;
         textTotalDamagePlayerTaken.UpdateTotalDamagePlayerTaken(totalDamageCntPlayerGain);

@@ -6,20 +6,67 @@ public class StageManager : MonoBehaviour
 {
     public void Init(
     int _minRoomCnt,
-    RetVoidParamVec3Vec3Delegate _warpPlayerCallback,
-    RetVoidParamStageClassDelegate _stageEnterCallback,
+    RetVoidParamVec3Delegate _warpPlayerCallback,
+    RetVoidParamVoidDelegate _stageEnterCallback,
     RetVoidParamVec3Vec3Delegate _enemySpawnPointCallback,
     RetVoidParamVec3Delegate _bossSpawnPointCallback)
     {
-        stageGenerator.GenerateLevel(_minRoomCnt, _warpPlayerCallback, _stageEnterCallback, SetListStage);
+        stageGenerator.GenerateLevel(_minRoomCnt, FindNextStage, SetListStage);
         enemySpawnPointCallback = _enemySpawnPointCallback;
         bossSpawnPointCallback = _bossSpawnPointCallback;
+        stageEnterCallback = _stageEnterCallback;
+        warpPlayerCallback = _warpPlayerCallback;
     }
 
-    public void SetCurStage(Stage _stage)
+    public void CamWarpFinish()
     {
-        curStage = _stage;
+        prevStage.SetActive(false);
     }
+
+    private void FindNextStage(Vector3 _warpPlayerDir)
+    {
+        int tempPosX = curStage.GetX;
+        int tempPosY = curStage.GetY;
+        if(_warpPlayerDir.x == 0)
+        {
+            if (_warpPlayerDir.z.Equals(1))
+                ++tempPosY;
+            else
+                --tempPosY;
+        }
+        else
+        {
+            if (_warpPlayerDir.x.Equals(1))
+                ++tempPosX;
+            else
+                --tempPosX;
+        }
+
+        foreach(Stage stage in listStage)
+        {
+            if(stage.GetX.Equals(tempPosX) && stage.GetY.Equals(tempPosY))
+            {
+                prevStage = curStage;
+                curStage = stage;
+                curStage.SetActive(true);
+            }    
+        }
+
+        warpPlayerCallback?.Invoke(_warpPlayerDir);
+        stageEnterCallback?.Invoke();
+    }
+
+    private void SetCurStage(Stage _stage)
+    {
+        if(curStage != null)
+            prevStage = curStage;
+
+        curStage = _stage;
+        curStage.SetActive(true);
+    }
+
+    public int GetCurStagePosX => curStage.GetX;
+    public int GetCurStagePosY => curStage.GetY;
 
     public bool GetIsCurStageClear()
     {
@@ -79,6 +126,12 @@ public class StageManager : MonoBehaviour
         listStage.AddRange(_arrayStage);
         listStage[0].UpdateClearState(true);
         listStage[0].ActivateGate();
+
+        //for (int i = 1; i < listStage.Count; ++i)
+        //    listStage[i].SetActive(false);
+
+        SetCurStage(listStage[0]);
+
         bossSpawnPointCallback?.Invoke(listStage[listStage.Count - 1].GetPosition());
     }
 
@@ -90,6 +143,9 @@ public class StageManager : MonoBehaviour
     private StageGenerator stageGenerator = null;
     private List<Stage> listStage = null;
     private Stage curStage = null;
+    private Stage prevStage = null;
     private RetVoidParamVec3Vec3Delegate enemySpawnPointCallback = null;
     private RetVoidParamVec3Delegate bossSpawnPointCallback = null;
+    private RetVoidParamVoidDelegate stageEnterCallback = null;
+    private RetVoidParamVec3Delegate warpPlayerCallback = null;
 }

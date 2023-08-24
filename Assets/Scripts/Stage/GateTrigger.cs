@@ -4,23 +4,17 @@ using UnityEngine;
 
 public class GateTrigger : MonoBehaviour
 {
-    public void Init(
-        RetVoidParamVoidDelegate _playerEnterTriggerCallback,
-        RetVoidParamVoidDelegate _playerExitTriggerCallback)
+    public void Init( RetVoidParamVoidDelegate _playerEnterGateTriggerCallback)
     {
-        playerEnterTriggerCallback = _playerEnterTriggerCallback;
-        playerExitTriggerCallback = _playerExitTriggerCallback;
+        playerEnterGateTriggerCallback = _playerEnterGateTriggerCallback;
+        
     }
 
     private void OnTriggerEnter(Collider _other)
     {
         if (_other.CompareTag("Player"))
-        {
-            playerExitTriggerCallback?.Invoke();
-            playerEnterTriggerCallback?.Invoke();
-        }
+            playerEnterGateTriggerCallback?.Invoke();
     }
 
-    private RetVoidParamVoidDelegate playerEnterTriggerCallback = null;
-    private RetVoidParamVoidDelegate playerExitTriggerCallback = null;
+    private RetVoidParamVoidDelegate playerEnterGateTriggerCallback = null;
 }

@@ -41,15 +41,9 @@ public class GameManager : MonoBehaviour, IPauseSubject, IBossEngageSubject
             observer.CheckPause(isPaused);
 
         if (isPaused)
-        {
             canvasPauseMenu.ShowPauseMenu();
-        }
-
         else
-        {
-            StopCoroutine("ShowElapsedTime");
             canvasPauseMenu.HidePauseMenu();
-        }
     }
     #endregion
 
@@ -72,22 +66,22 @@ public class GameManager : MonoBehaviour, IPauseSubject, IBossEngageSubject
     }
     #endregion
 
-    public void StageStart(Stage _stage)
+    public void StageEnter()
     {
-        stageMng.SetCurStage(_stage);
-
-        if (stageMng.GetIsCurStageClear()) StageClear();
+        if (stageMng.GetIsCurStageClear())
+        {
+            StageClear();
+            return;
+        }
 
         if (stageMng.GetCurStageState().Equals(EStageState.Normal))
         {
             stageMng.PlayerEnterStage();
-            // 맵 들어가고 일시정지 하기
             return;
         }
         else if (stageMng.GetCurStageState().Equals(EStageState.Boss))
         {
             ToggleBossEngage();
-            // 맵 들어가고 일시정지 하기
             return;
         }
 
@@ -119,11 +113,17 @@ public class GameManager : MonoBehaviour, IPauseSubject, IBossEngageSubject
             canvasPauseMenu.Init(TogglePause, ChangeScene);
 
         if(stageMng != null)
-            stageMng.Init(7, MovePlayer, StageStart, enemyMng.PlayerEnterStage, InitBossMng);
+            stageMng.Init(7, WarpPlayer, StageEnter, enemyMng.PlayerEnterStage, InitBossMng);
 
         if (cameraMng != null)
-            cameraMng.Init();
+            cameraMng.Init(onCamWarpFinish, playerMng.transform);
 
+    }
+
+    private void onCamWarpFinish()
+    {
+        stageMng.CamWarpFinish();
+        enemyMng.CheckPause(false);
     }
 
     private void InitBossMng(Vector3 _bossSpawnPos)
@@ -149,7 +149,7 @@ public class GameManager : MonoBehaviour, IPauseSubject, IBossEngageSubject
 
     private void UpdateTotalDamagePlayerTaken()
     {
-        canvasPauseMenu.UpdateTotalDamagePlayerTaken();
+        canvasPauseMenu.UpdateTotalDamagePlayerGain();
     }
 
     private void UpdateTotalAttackDamage(int _dmg)
@@ -168,11 +168,10 @@ public class GameManager : MonoBehaviour, IPauseSubject, IBossEngageSubject
         stageMng.ActivateDoorTrigger();
     }
 
-    private void MovePlayer(Vector3 _warpPlayerDir,Vector3 _warpCameraDir)
+    private void WarpPlayer(Vector3 _warpDir)
     {
-        playerMng.MovePlayerToNextStage(_warpPlayerDir);
-        cameraMng.WarpCamera(_warpCameraDir);
-        Debug.Log("playerMng");
+        playerMng.WarpPlayerToNextStage(_warpDir);
+        cameraMng.WarpCamera(_warpDir);
     }
 
     private GameManager() { }

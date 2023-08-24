@@ -143,12 +143,16 @@ PrefabInstance:
       value: P_GateControlConsole
       objectReference: {fileID: 0}
     - target: {fileID: 6140728381303671972, guid: 256d51bc9c3c18c4ca79bbba4c80a475, type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6140728381303671972, guid: 256d51bc9c3c18c4ca79bbba4c80a475, type: 3}
       propertyPath: m_ReceiveShadows
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6140728381303694500, guid: 256d51bc9c3c18c4ca79bbba4c80a475, type: 3}
       propertyPath: m_CastShadows
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6140728381303694500, guid: 256d51bc9c3c18c4ca79bbba4c80a475, type: 3}
       propertyPath: m_ReceiveShadows
@@ -253,7 +257,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6237892942325636280, guid: 47248146a8bbe7144a93f8e449080f47, type: 3}
       propertyPath: m_CastShadows
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6237892942325636280, guid: 47248146a8bbe7144a93f8e449080f47, type: 3}
       propertyPath: m_ReceiveShadows
@@ -347,7 +351,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6237892942325636280, guid: 47248146a8bbe7144a93f8e449080f47, type: 3}
       propertyPath: m_CastShadows
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6237892942325636280, guid: 47248146a8bbe7144a93f8e449080f47, type: 3}
       propertyPath: m_ReceiveShadows
@@ -437,7 +441,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6237892942325636280, guid: 47248146a8bbe7144a93f8e449080f47, type: 3}
       propertyPath: m_CastShadows
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6237892942325636280, guid: 47248146a8bbe7144a93f8e449080f47, type: 3}
       propertyPath: m_ReceiveShadows
@@ -624,6 +628,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3236873650518184050}
     m_Modifications:
+    - target: {fileID: 1185858745806850280, guid: ac8d4a57fa60abd408c7df5b712abe78, type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1185858745806904636, guid: ac8d4a57fa60abd408c7df5b712abe78, type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1185858745808806398, guid: ac8d4a57fa60abd408c7df5b712abe78, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1185858745808871928, guid: ac8d4a57fa60abd408c7df5b712abe78, type: 3}
       propertyPath: m_Name
       value: P_Gate

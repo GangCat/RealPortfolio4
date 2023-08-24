@@ -9,9 +9,10 @@ public class CameraManager : MonoBehaviour
         mainCam.WarpCamera(_warpDir);
     }
 
-    public void Init()
+    public void Init(RetVoidParamVoidDelegate _onCamWarpFinishCallback, Transform _playerTr)
     {
         mainCam = GetComponentInChildren<MainCam>();
+        mainCam.Init(_onCamWarpFinishCallback, _playerTr);
     }
 
     private MainCam mainCam = null;

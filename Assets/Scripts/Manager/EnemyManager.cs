@@ -19,6 +19,9 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
     public void CheckPause(bool _isPause)
     {
         isPause = _isPause;
+        EnemyController[] enemies = GetComponentsInChildren<EnemyController>();
+        foreach (EnemyController controller in enemies)
+            controller.CheckPause(_isPause);
     }
 
 
@@ -47,7 +50,9 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
                 GetRandomSpawnPosition(),
                 transform
                 );
-            enemyGo.GetComponent<EnemyController>().Setup(player, onEnemyDeadCallback);
+            EnemyController temp = enemyGo.GetComponent<EnemyController>();
+            temp.Setup(player, onEnemyDeadCallback);
+            temp.CheckPause(true);
 
             yield return StartCoroutine("WaitSeconds", spawnDelay);
         }
